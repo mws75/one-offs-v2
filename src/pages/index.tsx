@@ -5,6 +5,7 @@ import { LoadingPage } from "~/components/loadingspinner";
 import { type NextPage } from "next";
 import Head from "next/head";
 import { api } from "~/utils/api";
+import PostObject from "~/components/postobject";
 
 const PostFeed = () => {
   const { data, isLoading: postsLoading } = api.posts.getAll.useQuery();
@@ -18,7 +19,7 @@ const PostFeed = () => {
     <div className="flex flex-col">
       {data.map((post) => (
         <div key={post.id} className="flex flex-col">
-          {post.title}
+          <PostObject postTitle={post.title} />
         </div>
       ))}
     </div>
