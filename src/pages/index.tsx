@@ -1,17 +1,32 @@
 import { SignIn } from "@clerk/nextjs";
 import { SignInButton, SignOutButton, useUser } from "@clerk/nextjs";
+import { LoadingPage } from "~/components/loadingspinner";
 
 import { type NextPage } from "next";
 import Head from "next/head";
-
 import { api } from "~/utils/api";
 
 const PostFeed = () => {
-  const { data: posts } = api.example.posts.useQuery();
+  const { data, isLoading: postsLoading } = api.posts.getAll.useQuery();
+  if (postsLoading) {
+    return <LoadingPage />;
+  }
+  if (!data) {
+    return <p>No posts found</p>;
+  }
+  return (
+    <div className="flex flex-col">
+      {data.map((post) => (
+        <div key={post.id} className="flex flex-col">
+          {post.title}
+        </div>
+      ))}
+    </div>
+  );
 };
 
 const Home: NextPage = () => {
-  const hello = api.example.hello.useQuery({ text: "from tRPC" });
+  const { data } = api.posts.getAll.useQuery();
   const { isLoaded: userLoaded, isSignedIn } = useUser();
 
   return (
@@ -32,6 +47,7 @@ const Home: NextPage = () => {
         {isSignedIn && (
           <div>
             <p>You are signed in!</p>
+            <PostFeed />
             <div className="rounded bg-red-500 px-4 py-2 font-bold text-white hover:bg-red-700">
               <SignOutButton />
             </div>
