@@ -7,6 +7,9 @@ import Head from "next/head";
 import { api } from "~/utils/api";
 import PostObject from "~/components/postobject";
 import { PageLayout } from "~/components/layouts";
+import Link from "next/link";
+
+import { useRouter } from "next/router";
 
 const PostFeed = () => {
   const { data, isLoading: postsLoading } = api.posts.getAll.useQuery();
@@ -52,8 +55,15 @@ const Home: NextPage = () => {
             <div className="flex flex-wrap">
               <PostFeed />
             </div>
-            <div className="w-32 rounded bg-red-500 px-4 py-2 font-bold text-white hover:bg-red-700">
+            <div className="m-5 w-32 rounded bg-red-500 px-4 py-2 font-bold text-white hover:bg-red-700">
               <SignOutButton />
+            </div>
+            <div>
+              <Link href={`/newPost`}>
+                <button className="m-5 rounded bg-blue-500 p-4 px-4 py-2 font-bold text-white hover:bg-blue-700">
+                  Createt New Post
+                </button>{" "}
+              </Link>
             </div>
           </div>
         )}

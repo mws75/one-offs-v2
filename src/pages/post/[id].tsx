@@ -1,10 +1,12 @@
 import { NextPage } from "next";
+import { useRouter } from "next/router";
+
 import { api } from "~/utils/api";
 
-const SinglePagePost: NextPage<{ id: string }> = ({ id }) => {
+const SinglePagePost = () => {
+  const router = useRouter();
+  const { id } = router.query;
   let num_id = Number(id);
-  console.log(`[id] page: input is: ${id}`);
-
   const { data } = api.posts.getById.useQuery({
     id: num_id,
   });
