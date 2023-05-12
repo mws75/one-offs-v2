@@ -62,7 +62,7 @@ const Home: NextPage = () => {
               <Link href={`/newPost`}>
                 <button className="m-5 rounded bg-blue-500 p-4 px-4 py-2 font-bold text-white hover:bg-blue-700">
                   Createt New Post
-                </button>{" "}
+                </button>
               </Link>
             </div>
           </div>

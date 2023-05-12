@@ -1,25 +1,13 @@
 import ReactMarkdown from "react-markdown";
 import { useState } from "react";
-
-// const MarkdownTextarea = () => {
-//   return (
-//     <div className="flex flex-col">
-//       <textarea
-//         className="rounded border border-gray-300 p-2"
-//         rows={10}
-//         value={markdown}
-//         onChange={handleChange}
-//         placeholder="Enter your Markdown text here"
-//       />
-//       <div className="mt-4">
-//         <ReactMarkdown>{markdown}</ReactMarkdown>
-//       </div>
-//     </div>
-//   );
-// };
+import Link from "next/link";
+import { useUser } from "@clerk/nextjs";
+import { api } from "../utils/api";
 
 export const NewPost = () => {
   const [markdown, setMarkdown] = useState("");
+  const { user } = useUser()!;
+  const ctx = api.useContext;
 
   const handleChange = (e) => {
     setMarkdown(e.target.value);
@@ -43,6 +31,16 @@ export const NewPost = () => {
       </div>
       <div className="m-5">
         <ReactMarkdown className="prose">{markdown}</ReactMarkdown>
+      </div>
+      <div className="flex">
+        <button className="m-5 rounded bg-blue-500 p-4 px-4 py-2 font-bold text-white hover:bg-blue-700">
+          Submit
+        </button>
+        <Link href="/">
+          <button className="m-5 rounded bg-blue-500 p-4 px-4 py-2 font-bold text-white hover:bg-blue-700">
+            Cancel
+          </button>
+        </Link>
       </div>
     </>
   );
