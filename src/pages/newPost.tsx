@@ -7,6 +7,7 @@ import { type NextPage } from "next";
 
 export const NewPost = () => {
   const [markdown, setMarkdown] = useState("");
+  const [post_title, setPost_title] = useState("");
   const [input, setInput] = useState("");
   const { user } = useUser()!;
   const ctx = api.useContext();
@@ -15,10 +16,16 @@ export const NewPost = () => {
     setMarkdown(e.target.value);
   };
 
+  const handleTitleChange = (e: any) => {
+    setPost_title(e.target.value);
+  };
+
   const { mutate, isLoading: isPosting } = api.posts.create.useMutation({
     onSuccess: () => {
       setMarkdown("");
+      setPost_title("");
       void ctx.posts.getAll.invalidate();
+      console.log("post has been added");
     },
     onError: (error) => {
       const errorMessage = error.data?.zodError?.fieldErrors.content;
@@ -32,12 +39,19 @@ export const NewPost = () => {
 
   return (
     <>
-      <h1>New Post</h1>
+      <h1 className="m-4">New Post</h1>
 
       <label className="m-4 mb-2 block text-sm font-medium text-gray-900 dark:text-white">
         Your message
       </label>
       <div className="min-h-550">
+        <input
+          id="title"
+          className="m-5 block w-9/12 rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+          placeholder="title..."
+          value={post_title}
+          onChange={handleTitleChange}
+        ></input>
         <textarea
           id="message"
           className="!important min-h-450  m-5 block w-9/12 rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
@@ -50,7 +64,10 @@ export const NewPost = () => {
         <ReactMarkdown className="prose">{markdown}</ReactMarkdown>
       </div>
       <div className="flex">
-        <button className="m-5 rounded bg-blue-500 p-4 px-4 py-2 font-bold text-white hover:bg-blue-700">
+        <button
+          onClick={() => mutate({ title: post_title, content: markdown })}
+          className="m-5 rounded bg-blue-500 p-4 px-4 py-2 font-bold text-white hover:bg-blue-700"
+        >
           Submit
         </button>
         <Link href="/">
