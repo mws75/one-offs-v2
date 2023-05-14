@@ -3,15 +3,32 @@ import { useState } from "react";
 import Link from "next/link";
 import { useUser } from "@clerk/nextjs";
 import { api } from "../utils/api";
+import { type NextPage } from "next";
 
 export const NewPost = () => {
   const [markdown, setMarkdown] = useState("");
+  const [input, setInput] = useState("");
   const { user } = useUser()!;
-  const ctx = api.useContext;
+  const ctx = api.useContext();
 
-  const handleChange = (e) => {
+  const handleChange = (e: any) => {
     setMarkdown(e.target.value);
   };
+
+  const { mutate, isLoading: isPosting } = api.posts.create.useMutation({
+    onSuccess: () => {
+      setMarkdown("");
+      void ctx.posts.getAll.invalidate();
+    },
+    onError: (error) => {
+      const errorMessage = error.data?.zodError?.fieldErrors.content;
+      if (errorMessage && errorMessage[0]) {
+        alert(errorMessage[0]);
+      } else {
+        alert("Something went wrong, failed to Post");
+      }
+    },
+  });
 
   return (
     <>

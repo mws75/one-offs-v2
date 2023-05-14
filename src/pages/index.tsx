@@ -13,6 +13,7 @@ import { useRouter } from "next/router";
 
 const PostFeed = () => {
   const { data, isLoading: postsLoading } = api.posts.getAll.useQuery();
+  console.log(data);
   if (postsLoading) {
     return <LoadingPage />;
   }
@@ -31,8 +32,7 @@ const PostFeed = () => {
 };
 
 const Home: NextPage = () => {
-  const { data } = api.posts.getAll.useQuery();
-  const { isLoaded: userLoaded, isSignedIn } = useUser();
+  const { isLoaded: userLoaded, isSignedIn, user } = useUser();
 
   return (
     <>
@@ -51,7 +51,7 @@ const Home: NextPage = () => {
         </div>
         {isSignedIn && (
           <div>
-            <p>You are signed in!</p>
+            <p>{`You are signed in as : ${user.id}`}</p>
             <div className="flex flex-wrap">
               <PostFeed />
             </div>

@@ -1,6 +1,7 @@
 import { RouterOutputs } from "../utils/api";
 import Link from "next/link";
 
+// [number] grabs a single element from the array so we can create a type of posts[0].
 type postedContent = RouterOutputs["posts"]["getAll"][number];
 
 export const PostObject = (props: postedContent) => {

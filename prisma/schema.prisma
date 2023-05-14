@@ -11,7 +11,7 @@ generator client {
   provider = "prisma-client-js"
 }
 
-model Post {
+model Posts {
   id              Int       @default(autoincrement()) @id
   createdAt       DateTime  @default(now())
   updatedAt       DateTime  @updatedAt
