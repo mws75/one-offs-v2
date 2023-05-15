@@ -51,19 +51,20 @@ const Home: NextPage = () => {
         </div>
         {isSignedIn && (
           <div>
-            <p>{`You are signed in as : ${user.id}`}</p>
+            <p>{`You are signed in as : ${user.emailAddresses}`}</p>
             <div className="flex flex-wrap">
               <PostFeed />
             </div>
-            <div className="m-5 w-32 rounded bg-red-500 px-4 py-2 font-bold text-white hover:bg-red-700">
-              <SignOutButton />
-            </div>
+
             <div>
               <Link href={`/newPost`}>
-                <button className="m-5 rounded bg-blue-500 p-4 px-4 py-2 font-bold text-white hover:bg-blue-700">
+                <button className="mx-5 rounded bg-blue-500 p-4 px-4 py-2 font-bold text-white hover:bg-blue-700">
                   Createt New Post
                 </button>
               </Link>
+            </div>
+            <div className="m-5 w-32 rounded bg-red-500 px-4 py-2 font-bold text-white hover:bg-red-700">
+              <SignOutButton />
             </div>
           </div>
         )}

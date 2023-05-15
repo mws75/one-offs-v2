@@ -11,6 +11,8 @@ export const NewPost = () => {
   const [input, setInput] = useState("");
   const { user } = useUser()!;
   const ctx = api.useContext();
+  console.log("this is the user: ");
+  console.log(user);
 
   const handleChange = (e: any) => {
     setMarkdown(e.target.value);
@@ -65,7 +67,13 @@ export const NewPost = () => {
       </div>
       <div className="flex">
         <button
-          onClick={() => mutate({ title: post_title, content: markdown })}
+          onClick={() =>
+            mutate({
+              title: post_title,
+              content: markdown,
+              profile_image_url: user?.profileImageUrl || "none",
+            })
+          }
           className="m-5 rounded bg-blue-500 p-4 px-4 py-2 font-bold text-white hover:bg-blue-700"
         >
           Submit
