@@ -1,13 +1,16 @@
 const RecentlyViewedJson = "{post_id: 1, post_id: 2, post_id: 3}";
 
-const checkIfValueExistsInJSONObject = (
+export const checkIfValueExistsInJSONObject = (
   json: string,
   key: string,
   value: any
 ) => {
   const jsonObject = JSON.parse(json);
+  console.log(jsonObject);
   const target_value = value;
-  const value_exists = jsonObject.some((obj) => obj[key] === target_value);
+  const value_exists = jsonObject.some(
+    (obj: { [key: string]: number }) => obj[key] === target_value
+  );
 
   return value_exists;
 };
@@ -31,14 +34,16 @@ const addRecordToJSON = (json: any, key: string, value: any) => {
   return updatedJsonObject;
 };
 
-const udpatedRecentlyViewedJson = (
+export const udpatedRecentlyViewedJson = (
   json: string,
   key: string,
   new_value: number
 ) => {
-  if (checkIfValueExistsInJSONObject(json, key, new_value)) {
+  if (!checkIfValueExistsInJSONObject(json, key, new_value)) {
     let updated_json = deleteBottomRecordFromJSON(json);
-    updated_json = addRecordToJSON(updated_json, "post_id", new_value);
+    updated_json = addRecordToJSON(updated_json, "id", new_value);
+
+    console.log(updated_json);
 
     return updated_json;
   } else {
