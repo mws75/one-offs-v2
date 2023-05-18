@@ -34,12 +34,19 @@ const addRecordToJSON = (json: any, key: string, value: any) => {
   return updatedJsonObject;
 };
 
+export const checkLengthOfJSON = (json: string) => {
+  const jsonObject = JSON.parse(json);
+  return jsonObject.length;
+};
+
 export const udpatedRecentlyViewedJson = (
   json: string,
   key: string,
   new_value: number
 ) => {
-  if (!checkIfValueExistsInJSONObject(json, key, new_value)) {
+  if (checkLengthOfJSON(json) < 3) {
+    addRecordToJSON(json, "id", new_value);
+  } else if (!checkIfValueExistsInJSONObject(json, key, new_value)) {
     let updated_json = deleteBottomRecordFromJSON(json);
     updated_json = addRecordToJSON(updated_json, "id", new_value);
 

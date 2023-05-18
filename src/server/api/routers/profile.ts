@@ -27,4 +27,18 @@ export const profileRouter = createTRPCRouter({
       });
       return updated_content;
     }),
+
+  getById: publicProcedure
+    .input(z.object({ id: z.string() }))
+    .query(async ({ ctx, input }) => {
+      const recent_posts_json = await ctx.prisma.users.findUnique({
+        where: {
+          user_id: input.id,
+        },
+      });
+      if (!recent_posts_json) {
+        return "[]";
+      }
+      return recent_posts_json;
+    }),
 });
