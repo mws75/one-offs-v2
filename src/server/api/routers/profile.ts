@@ -1,4 +1,5 @@
 import { TRPCError } from "@trpc/server";
+import { Input } from "postcss";
 import { z } from "zod";
 
 import {
@@ -13,6 +14,21 @@ const UpdateRecentlyViewedSchema = z.object({
 });
 
 export const profileRouter = createTRPCRouter({
+  insertNewUser: privateProcedure
+    .input(z.object({ profile_image_url: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      const userId = ctx.userId;
+      const profile_image_url = ctx.profile_image_url;
+      const update_table = await ctx.prisma.users.create({
+        data: {
+          user_id: userId,
+          recent_posts_json: "[]",
+          liked_posts: "[]",
+          profile_image_url: input.profile_image_url,
+        },
+      });
+      return update_table;
+    }),
   updateRecentlyViewed: privateProcedure
     .input(z.object({ content: z.string() }))
     .mutation(async ({ ctx, input }) => {
@@ -31,14 +47,14 @@ export const profileRouter = createTRPCRouter({
   getById: publicProcedure
     .input(z.object({ id: z.string() }))
     .query(async ({ ctx, input }) => {
-      const recent_posts_json = await ctx.prisma.users.findUnique({
+      const user_profile = await ctx.prisma.users.findUnique({
         where: {
           user_id: input.id,
         },
       });
-      if (!recent_posts_json) {
+      if (!user_profile) {
         return "[]";
       }
-      return recent_posts_json;
+      return user_profile;
     }),
 });

@@ -1,4 +1,5 @@
 import { TRPCError } from "@trpc/server";
+import { profile } from "console";
 import { z } from "zod";
 
 import {
@@ -32,6 +33,7 @@ export const postsRouter = createTRPCRouter({
     )
     .mutation(async ({ ctx, input }) => {
       const authorId = ctx.userId;
+      if (!authorId) throw new TRPCError({ code: "UNAUTHORIZED" });
       const new_post = await ctx.prisma.posts.create({
         data: {
           user_name: authorId,

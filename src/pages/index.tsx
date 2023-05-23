@@ -8,18 +8,50 @@ import { api } from "~/utils/api";
 import PostObject from "~/components/postobject";
 import { PageLayout } from "~/components/layouts";
 import Link from "next/link";
+import { useEffect } from "react";
 
 import { useRouter } from "next/router";
 
+// TODO
+
 const PostFeed = () => {
+  const { user } = useUser();
+  const userId = user.id;
+  const profile_image_url = user.profileImageUrl;
+
   const { data, isLoading: postsLoading } = api.posts.getAll.useQuery();
-  console.log(data);
+  const user_profile = api.profile.getById.useQuery({ id: userId });
+  const { mutate } = api.profile.insertNewUser.useMutation({});
+
+  // This still errors because sometimes it trys to run before user_profile is loaded.  You
+  // just can't tell because it does it a couple of times per render (not sure why).  And by the
+  // third render user_profile is loaded and no longer undefined.  When that happends  it tries to
+  // insert into database but gets a unique constraint error.
+  // Basically the only reason this does go to shit is because of that unique constraint on the table.
+  useEffect(() => {
+    const fetchData = async () => {
+      if (user_profile.data === undefined) {
+        try {
+          await mutate({ profile_image_url });
+        } catch (error) {
+          const errorMessage = error.data?.zodError?.fieldErrors.content;
+          console.log(error);
+          alert("something went wrong");
+        }
+      } else {
+        console.log("user has already been added");
+      }
+    };
+    fetchData();
+  }, []);
+
   if (postsLoading) {
     return <LoadingPage />;
   }
   if (!data) {
     return <p>No posts found</p>;
   }
+
   return (
     <div className="flex flex-wrap">
       {data.map((post) => (
@@ -33,6 +65,10 @@ const PostFeed = () => {
 
 const Home: NextPage = () => {
   const { isLoaded: userLoaded, isSignedIn, user } = useUser();
+
+  if (!userLoaded) {
+    return <LoadingPage />;
+  }
 
   return (
     <>

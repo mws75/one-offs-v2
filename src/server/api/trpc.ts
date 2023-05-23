@@ -47,10 +47,12 @@ export const createTRPCContext = (opts: CreateNextContextOptions) => {
   const sesh = getAuth(req);
 
   const userId = sesh.userId;
+  const profile_image_url = sesh.user?.profileImageUrl;
 
   return {
     prisma,
     userId,
+    profile_image_url,
   };
 };
 

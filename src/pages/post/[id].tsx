@@ -6,24 +6,55 @@ import { profileRouter } from "../../server/api/routers/profile";
 import Link from "next/link";
 import { udpatedRecentlyViewedJson } from "../../server/helpers/dataHelper";
 import { useUser } from "@clerk/nextjs";
+import { useEffect, useState } from "react";
+
+const useUserProfile = (userId: string) => {
+  const { data } = api.profile.getById.useQuery({
+    id: String(userId),
+  });
+  return data;
+};
 
 const SinglePagePost = () => {
   const router = useRouter();
   const { id } = router.query;
   let num_id = Number(id);
   const { user } = useUser()!;
-
   const { data } = api.posts.getById.useQuery({
     id: num_id,
   });
+  const user_profile = useUserProfile(user.id);
 
-  // const sample_json = `[{"id": 1}, {"id": 2}, {"id": 3}]`;
-  // const { mutate } = api.profile.updateRecentlyViewed.useMutation({
-  //   content: sample_json
-  // });
+  const { mutate } = api.profile.updateRecentlyViewed.useMutation({
+    onSuccess: () => {
+      console.log("post has been added");
+    },
+    onError: (error) => {
+      const errorMessage = error.data?.zodError?.fieldErrors.content;
+      alert("Something went wrong, failed to Post");
+    },
+  });
+
+  useEffect(() => {
+    const updateData = async () => {
+      try {
+        console.log("trying to update json...");
+        const recent_posts_json = user_profile.recent_posts_json;
+        const new_recent_posts_json = udpatedRecentlyViewedJson(
+          recent_posts_json,
+          "id",
+          num_id
+        );
+        console.log(new_recent_posts_json);
+        mutate({ content: String(new_recent_posts_json) });
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    updateData();
+  }, []);
 
   if (!data) return <div>{`404 and id: ${id}`}</div>;
-
   return (
     <>
       <div className="m-5 text-center">
