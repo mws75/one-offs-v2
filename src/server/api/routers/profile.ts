@@ -14,6 +14,10 @@ const UpdateRecentlyViewedSchema = z.object({
 });
 
 export const profileRouter = createTRPCRouter({
+  getAll: publicProcedure.query(({ ctx }) => {
+    return ctx.prisma.users.findMany();
+  }),
+
   insertNewUser: privateProcedure
     .input(z.object({ profile_image_url: z.string() }))
     .mutation(async ({ ctx, input }) => {
