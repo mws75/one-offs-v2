@@ -7,6 +7,7 @@ import Link from "next/link";
 import { udpatedRecentlyViewedJson } from "../../server/helpers/dataHelper";
 import { useUser } from "@clerk/nextjs";
 import { useEffect, useState } from "react";
+import { PageLayout } from "~/components/layouts";
 
 const useUserProfile = (userId: string) => {
   const { data } = api.profile.getById.useQuery({
@@ -15,15 +16,23 @@ const useUserProfile = (userId: string) => {
   return data;
 };
 
+const usePostInfo = (post_id: number) => {
+  const { data } = api.posts.getById.useQuery({
+    id: post_id,
+  });
+  return data;
+};
+
+type PostInfo = RouterOutputs["posts"]["getAll"][number];
+type UserProfile = RouterOutputs["profile"]["getAll"][number];
+
 const SinglePagePost = () => {
   const router = useRouter();
   const { id } = router.query;
   let num_id = Number(id);
   const { user } = useUser()!;
-  const { data } = api.posts.getById.useQuery({
-    id: num_id,
-  });
-  const user_profile = useUserProfile(user.id);
+  const post_data: PostInfo = usePostInfo(num_id);
+  const user_profile: UserProfile = useUserProfile(user.id);
 
   const { mutate } = api.profile.updateRecentlyViewed.useMutation({
     onSuccess: () => {
@@ -38,12 +47,11 @@ const SinglePagePost = () => {
   useEffect(() => {
     const updateData = async () => {
       try {
-        console.log("trying to update json...");
+        const newPost = `{"id":${num_id},"title":"${post_data.title}"}`;
         const recent_posts_json = user_profile.recent_posts_json;
         const new_recent_posts_json = udpatedRecentlyViewedJson(
           recent_posts_json,
-          "id",
-          num_id
+          newPost
         );
         console.log(new_recent_posts_json);
         mutate({ content: String(new_recent_posts_json) });
@@ -54,21 +62,27 @@ const SinglePagePost = () => {
     updateData();
   }, []);
 
-  if (!data) return <div>{`404 and id: ${id}`}</div>;
+  if (!post_data) return <div>{`404 and id: ${id}`}</div>;
   return (
     <>
-      <div className="m-5 text-center">
-        <h1>
-          <ReactMarkdown className="prose">{`#  ${data.title}`}</ReactMarkdown>
-        </h1>
-      </div>
-      <div className="m-5">
-        <ReactMarkdown className="prose">{data.post}</ReactMarkdown>
-        <Link href="/">
-          <button className="mt-5 rounded bg-blue-500 p-4 px-4 py-2 font-bold text-white hover:bg-blue-700">
-            home
-          </button>
-        </Link>
+      <div className="bg-gradient-to-r from-purple-300 to-pink-200">
+        <PageLayout>
+          <div className="ml-5 mr-5 h-screen rounded-lg bg-white p-4 drop-shadow-lg">
+            <div className="m-5">
+              <h1>
+                <ReactMarkdown className="prose">{`#  ${post_data.title}`}</ReactMarkdown>
+              </h1>
+            </div>
+            <div className="m-5">
+              <ReactMarkdown className="prose">{post_data.post}</ReactMarkdown>
+              <Link href="/">
+                <button className="mt-5 rounded bg-blue-500 p-4 px-4 py-2 font-bold text-white hover:bg-blue-700">
+                  home
+                </button>
+              </Link>
+            </div>
+          </div>
+        </PageLayout>
       </div>
     </>
   );
