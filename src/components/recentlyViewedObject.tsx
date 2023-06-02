@@ -6,6 +6,8 @@ import { useUser } from "@clerk/nextjs";
 import { useEffect, useState } from "react";
 import { LoadingPage } from "./loadingspinner";
 
+// TODO Makes the items links to the pages.
+
 interface Item {
   id: number;
 }

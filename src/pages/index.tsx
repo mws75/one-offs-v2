@@ -99,12 +99,12 @@ const Home: NextPage = () => {
 
               <div>
                 <Link href={`/newPost`}>
-                  <button className="mx-5 rounded bg-blue-500 p-4 px-4 py-2 font-bold text-white hover:bg-blue-700">
+                  <button className="mx-5 rounded bg-purple-500 p-4 px-4 py-2 font-bold text-white hover:bg-blue-700">
                     Createt New Post
                   </button>
                 </Link>
               </div>
-              <div className="m-5 w-32 rounded bg-red-500 px-4 py-2 font-bold text-white hover:bg-red-700">
+              <div className="m-5 w-32 rounded bg-pink-400 px-4 py-2 font-bold text-white hover:bg-red-700">
                 <SignOutButton />
               </div>
             </div>

@@ -16,7 +16,7 @@ model Posts {
   createdAt       DateTime  @default(now())
   updatedAt       DateTime  @updatedAt
   user_name       String    @db.VarChar(255)
-  post   String    @db.VarChar(255)
+  post   String    @db.VarChar(3000)
   title   String    @db.VarChar(255)
   profile_image_url String? @db.VarChar(255)
 
