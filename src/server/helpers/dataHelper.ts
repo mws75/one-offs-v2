@@ -1,5 +1,3 @@
-const RecentlyViewedJson = "{post_id: 1, post_id: 2, post_id: 3}";
-
 export const checkIfValueExistsInJSONObject = (
   json: string,
   new_object: string
@@ -26,7 +24,7 @@ const deleteBottomRecordFromJSON = (json: string) => {
 const addRecordToJSON = (json: any, new_object: any) => {
   const jsonObject = JSON.parse(json);
   const new_object_json = JSON.parse(new_object);
-  jsonObject.push(new_object_json);
+  jsonObject.unshift(new_object_json);
 
   const updatedJsonObject = JSON.stringify(jsonObject);
   return updatedJsonObject;

@@ -5,27 +5,26 @@ import {
 } from "../server/helpers/dataHelper";
 
 const sampleJSON = `[
-        {"id": 6, "name": "post6"},
-        {"id": 2, "name": "post2"},
-        {"id": 3, "name": "post3"}
+        {"id": 6, "title": "post6"},
+        {"id": 2, "title": "post2"},
+        {"id": 3, "title": "post3"}
     ]
     `;
 
 test("should return a json string that contains the newJsonObj", () => {
-  const newJsonObj = `{"id":4,"name":"post4"}`;
+  const newJsonObj = `{"id":4,"title":"post4"}`;
   const updatedJson = udpatedRecentlyViewedJson(sampleJSON, newJsonObj);
   expect(updatedJson).toContain(newJsonObj);
 });
 
 test("should return false because json does not contain the newJsonObj", () => {
-  const newJsonObj = `{"id": 4, "name": "post4"}`;
-
+  const newJsonObj = `{"id": 4, "title": "post4"}`;
   const constains_Id = checkIfValueExistsInJSONObject(sampleJSON, newJsonObj);
   expect(constains_Id).toBeFalsy();
 });
 
 test("should return true because json contains the value", () => {
-  const newJsonObj = `{"id": 3, "name": "post3"}`;
+  const newJsonObj = `{"id": 3, "title": "post3"}`;
   const constains_Id = checkIfValueExistsInJSONObject(sampleJSON, newJsonObj);
   expect(constains_Id).toBeTruthy();
 });

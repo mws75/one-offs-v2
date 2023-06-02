@@ -10,12 +10,17 @@ interface Item {
   id: number;
 }
 
+interface recentPosts {
+  id: number;
+  title: string;
+}
+
 // Custom hook to get recently viewed posts.
 const useUserProfile = (userId: string) => {
-  const { data } = api.profile.getById.useQuery({
+  const { data, isError, isLoading, error } = api.profile.getById.useQuery({
     id: String(userId),
   });
-  return { data };
+  return { data, isError, isLoading, error };
 };
 
 export const RecentlyViewedObject = () => {
@@ -23,29 +28,18 @@ export const RecentlyViewedObject = () => {
   if (!user) return null;
 
   const profile_image_url = user?.profileImageUrl;
-  const { data: user_profile } = useUserProfile(user.id);
-  const [recentPostsJson, setRecentPostsJson] = useState<Item[] | null>(null);
-  const [isProfileLoading, setIsProfileLoading] = useState(true);
-
-  useEffect(() => {
-    const getData = async () => {
-      try {
-        const recent_posts_json = user_profile?.recent_posts_json;
-        setRecentPostsJson(JSON.parse(String(recent_posts_json)));
-        setIsProfileLoading(false);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    if (recentPostsJson === null) {
-      getData();
-    }
-  });
+  const user_profile = useUserProfile(user.id);
 
   //   console.log(recently_viewed_json);
-  if (isProfileLoading) {
+  if (user_profile.isLoading) {
     return <LoadingPage />;
   }
+
+  const recentPostsJson = JSON.parse(
+    String(user_profile.data?.recent_posts_json)
+  );
+
+  console.log(recentPostsJson);
 
   return (
     <>
@@ -60,8 +54,11 @@ export const RecentlyViewedObject = () => {
           />
         </div>
         <div className="ml-4 flex-grow justify-center">
-          {recentPostsJson &&
-            recentPostsJson.map((post) => <div key={post.id}>{post.id}</div>)}
+          <ul>
+            {recentPostsJson.map((item: recentPosts) => (
+              <li key={item.id}>{item.title}</li>
+            ))}
+          </ul>
         </div>
       </div>
     </>

@@ -30,7 +30,7 @@ Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/ver
 ## Recent Posts JSON Object Example :
 
 [
-{"id": 6, "name": "post1"},
-{"id": 2, "name": "post2"},
-{"id": 3, "name": "post3"}
+{"id": 6, "title": "post1"},
+{"id": 2, "title": "post2"},
+{"id": 3, "title": "post3"}
 ]
