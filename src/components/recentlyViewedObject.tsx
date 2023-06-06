@@ -5,6 +5,7 @@ import default_profile_pic from "../../public/default_profile_pic.png";
 import { useUser } from "@clerk/nextjs";
 import { useEffect, useState } from "react";
 import { LoadingPage } from "./loadingspinner";
+import profile_image from "../../public/user-circle.png";
 
 // TODO Makes the items links to the pages.
 
@@ -45,23 +46,39 @@ export const RecentlyViewedObject = () => {
 
   return (
     <>
-      <div className="m-4 flex h-40 w-11/12 flex-row items-center rounded-lg bg-slate-100 p-4 shadow-md hover:bg-slate-300">
-        <div className="float-left">
-          <Image
-            src={profile_image_url ? profile_image_url : default_profile_pic}
-            alt={"profile_pic"}
-            width={120}
-            height={120}
-            className="rounded-full"
-          />
+      <div className="m-4 grid h-40 w-11/12 grid-flow-row-dense grid-cols-6 rounded-lg  bg-slate-100 shadow-md">
+        <div className="col-span-1 m-2 justify-items-center">
+          <Link href={`/userProfile`}>
+            <span>
+              <Image
+                src={
+                  profile_image_url ? profile_image_url : default_profile_pic
+                }
+                alt={"profile_pic"}
+                width={120}
+                height={120}
+                className="justify-items-center rounded-full border-2 border-solid border-slate-600"
+              />
+            </span>
+          </Link>
         </div>
-        <div className="ml-4 flex-grow justify-center">
+
+        <div className="col-span-4">
           <ul>
             {recentPostsJson.map((item: recentPosts) => (
-              <li key={item.id}>{item.title}</li>
+              <Link href={`/post/${item.id}`}>
+                <li
+                  key={item.id}
+                  className="border-slate m-2 rounded-lg border-2 border-solid bg-slate-100 p-2 hover:bg-slate-300"
+                >
+                  <span className="relative">{item.title}</span>
+                </li>
+              </Link>
             ))}
           </ul>
         </div>
+
+        <div className="col-span-1 m-4"></div>
       </div>
     </>
   );

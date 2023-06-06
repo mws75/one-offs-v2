@@ -58,7 +58,7 @@ const PostFeed = () => {
   return (
     <div className="flex flex-wrap">
       {data.map((post) => (
-        <div key={post.id} className="mb-4 p-4">
+        <div key={post.id} className=" p-4">
           <PostObject {...post} key={post.id} />
         </div>
       ))}

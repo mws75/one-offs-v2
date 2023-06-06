@@ -28,7 +28,12 @@ const SinglePagePost = () => {
   const { id } = router.query;
   let num_id = Number(id);
   const { user } = useUser();
-  if (!user) return null;
+  if (!user)
+    return (
+      <div>
+        <p>401 Please Login</p>
+      </div>
+    );
 
   const post_data = usePostInfo(num_id);
   const user_profile = useUserProfile(user.id);

@@ -10,6 +10,14 @@ export const NewPost = () => {
   const [post_title, setPost_title] = useState("");
   const [input, setInput] = useState("");
   const { user } = useUser()!;
+
+  if (!user)
+    return (
+      <div>
+        <p>401 Please Login</p>
+      </div>
+    );
+
   const ctx = api.useContext();
   console.log("this is the user: ");
   console.log(user);
