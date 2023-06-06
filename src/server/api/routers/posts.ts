@@ -13,6 +13,16 @@ export const postsRouter = createTRPCRouter({
     return ctx.prisma.posts.findMany();
   }),
 
+  getUserPosts: publicProcedure
+    .input(z.object({ user_name: z.string() }))
+    .query(async ({ ctx, input }) => {
+      const posts = await ctx.prisma.posts.findMany({
+        where: { user_name: input.user_name },
+      });
+      if (!posts) throw new TRPCError({ code: "NOT_FOUND" });
+      return posts;
+    }),
+
   getById: publicProcedure
     .input(z.object({ id: z.number() }))
     .query(async ({ ctx, input }) => {

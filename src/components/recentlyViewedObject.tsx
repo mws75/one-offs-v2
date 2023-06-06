@@ -28,7 +28,13 @@ const useUserProfile = (userId: string) => {
 
 export const RecentlyViewedObject = () => {
   const { user } = useUser();
-  if (!user) return null;
+
+  if (!user)
+    return (
+      <div>
+        <p>401 Please Login</p>
+      </div>
+    );
 
   const profile_image_url = user?.profileImageUrl;
   const user_profile = useUserProfile(user.id);
