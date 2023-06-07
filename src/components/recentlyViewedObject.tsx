@@ -50,7 +50,7 @@ export const RecentlyViewedObject = () => {
 
   return (
     <>
-      <div className="m-4 grid h-40 w-11/12 grid-flow-row-dense grid-cols-6 rounded-lg  bg-slate-100 shadow-md">
+      <div className=" m-4 flex grid h-40 w-11/12 grid-flow-row-dense grid-cols-6 items-center rounded-lg  bg-slate-100 shadow-md">
         <div className="col-span-1 m-2 justify-items-center">
           <Link href={`/userProfile`}>
             <span>
@@ -61,7 +61,7 @@ export const RecentlyViewedObject = () => {
                 alt={"profile_pic"}
                 width={120}
                 height={120}
-                className="justify-items-center rounded-full border-2 border-solid border-slate-600"
+                className="m-2 justify-items-center rounded-full border-2 border-solid border-slate-600"
               />
             </span>
           </Link>
@@ -73,7 +73,7 @@ export const RecentlyViewedObject = () => {
               <Link href={`/post/${item.id}`}>
                 <li
                   key={item.id}
-                  className="border-slate m-2 rounded-lg border-2 border-solid bg-slate-100 p-2 hover:bg-slate-300"
+                  className="border-slate m-2 ml-4 rounded-lg border-2 border-solid bg-slate-100 p-2 hover:bg-slate-300"
                 >
                   <span className="relative">{item.title}</span>
                 </li>
