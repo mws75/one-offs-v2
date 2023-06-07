@@ -87,7 +87,7 @@ const SinglePagePost = () => {
                 {post_data.data.post}
               </ReactMarkdown>
               <Link href="/">
-                <button className="mt-5 rounded bg-blue-500 p-4 px-4 py-2 font-bold text-white hover:bg-blue-700">
+                <button className="mt-5 rounded bg-purple-500 p-4 px-4 py-2 font-bold text-white hover:bg-purple-700">
                   home
                 </button>
               </Link>

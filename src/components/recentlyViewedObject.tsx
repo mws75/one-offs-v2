@@ -5,8 +5,6 @@ import default_profile_pic from "../../public/default_profile_pic.png";
 import { useUser } from "@clerk/nextjs";
 import { useEffect, useState } from "react";
 import { LoadingPage } from "./loadingspinner";
-import profile_image from "../../public/user-circle.png";
-
 // TODO Makes the items links to the pages.
 
 interface Item {
