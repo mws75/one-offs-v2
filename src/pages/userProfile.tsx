@@ -9,6 +9,7 @@ import Link from "next/link";
 interface UserProps {
   id: string;
   profile_image_url: string;
+  email: string;
 }
 
 interface UserPost {
@@ -39,6 +40,7 @@ const UserProfileHeader: React.FC<UserProps> = (props) => {
           height={120}
           className="m-4 rounded-full border-2 border-solid border-slate-600"
         />
+        <p>{`email: ${props.email}`}</p>
       </div>
     </>
   );
@@ -65,6 +67,7 @@ export const UserProfile = () => {
           <UserProfileHeader
             profile_image_url={user.profileImageUrl}
             id={user.id}
+            email={String(user.emailAddresses)}
           />
           <div className="m-4 flex w-11/12  items-center rounded-lg bg-slate-100 shadow-md">
             <ul>
@@ -75,9 +78,14 @@ export const UserProfile = () => {
                   <Link href={`/post/${item.id}`}>
                     <li
                       key={item.id}
-                      className="border-slate m-2 ml-4 rounded-lg border-2 border-solid bg-slate-100 p-2 hover:bg-slate-300"
+                      className="border-slate m-2 ml-4 flex w-96 rounded-lg border-2 border-solid bg-slate-100 p-2 hover:bg-slate-300"
                     >
-                      <span className="relative">{item.title}</span>
+                      <span className="flex-grow self-center">
+                        {item.title}
+                      </span>
+                      <button className="justify-items-end rounded bg-purple-500 p-4 px-4 py-2 font-bold text-white hover:bg-purple-700">
+                        delete
+                      </button>
                     </li>
                   </Link>
                 ))
