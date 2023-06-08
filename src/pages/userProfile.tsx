@@ -11,6 +11,11 @@ interface UserProps {
   profile_image_url: string;
 }
 
+interface UserPost {
+  id: number;
+  title: string;
+}
+
 // Custom Hooks
 const useUserPosts = (user_name: string) => {
   const { data, isError, isLoading, error } = api.posts.getUserPosts.useQuery({
@@ -55,18 +60,37 @@ export const UserProfile = () => {
 
   return (
     <>
-      <PageLayout>
-        <UserProfileHeader
-          profile_image_url={user.profileImageUrl}
-          id={user.id}
-        />
-        <p className="m-4">{`${userPosts.data}`}</p>
-        <Link href="/">
-          <button className="m-4 mt-5 rounded bg-purple-500 p-4 px-4 py-2 font-bold text-white hover:bg-purple-700">
-            home
-          </button>
-        </Link>
-      </PageLayout>
+      <div className="bg-gradient-to-r from-purple-300 to-pink-200">
+        <PageLayout>
+          <UserProfileHeader
+            profile_image_url={user.profileImageUrl}
+            id={user.id}
+          />
+          <div className="m-4 flex w-11/12  items-center rounded-lg bg-slate-100 shadow-md">
+            <ul>
+              {!userPosts.data ? (
+                <li>no posts yet</li>
+              ) : (
+                userPosts.data.map((item: UserPost) => (
+                  <Link href={`/post/${item.id}`}>
+                    <li
+                      key={item.id}
+                      className="border-slate m-2 ml-4 rounded-lg border-2 border-solid bg-slate-100 p-2 hover:bg-slate-300"
+                    >
+                      <span className="relative">{item.title}</span>
+                    </li>
+                  </Link>
+                ))
+              )}
+            </ul>
+          </div>
+          <Link href="/">
+            <button className="m-4 mt-5 rounded bg-purple-500 p-4 px-4 py-2 font-bold text-white hover:bg-purple-700">
+              home
+            </button>
+          </Link>
+        </PageLayout>
+      </div>
     </>
   );
 };
