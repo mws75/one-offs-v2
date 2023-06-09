@@ -46,6 +46,18 @@ const UserProfileHeader: React.FC<UserProps> = (props) => {
   );
 };
 
+const AlertWindow = () => {
+  const showAlert = () => {
+    window.alert("Post Deleted!");
+  };
+
+  return (
+    <div>
+      <button onClick={showAlert}>Show Alert</button>
+    </div>
+  );
+};
+
 export const UserProfile = () => {
   const { user } = useUser()!;
 
@@ -57,6 +69,20 @@ export const UserProfile = () => {
     );
 
   const userPosts = useUserPosts(user.id);
+
+  const { mutate, isLoading: isDeleting } = api.posts.delete.useMutation({
+    onSuccess: () => {
+      alert("Post deleted!");
+    },
+    onError: (error) => {
+      const errorMessage = error.data?.zodError?.fieldErrors.content;
+      if (errorMessage && errorMessage[0]) {
+        alert(errorMessage[0]);
+      } else {
+        alert("Something went wrong, failed to delete");
+      }
+    },
+  });
 
   console.log(userPosts.data);
 
@@ -75,19 +101,29 @@ export const UserProfile = () => {
                 <li>no posts yet</li>
               ) : (
                 userPosts.data.map((item: UserPost) => (
-                  <Link href={`/post/${item.id}`}>
-                    <li
-                      key={item.id}
-                      className="border-slate m-2 ml-4 flex w-96 rounded-lg border-2 border-solid bg-slate-100 p-2 hover:bg-slate-300"
+                  <div className="flex">
+                    <Link href={`/post/${item.id}`}>
+                      <li
+                        key={item.id}
+                        className="border-slate m-2 ml-4 flex w-96 rounded-lg border-2 border-solid bg-slate-100 p-2 hover:bg-slate-300"
+                      >
+                        <span className="flex-grow self-center">
+                          {item.title}
+                        </span>
+                      </li>
+                    </Link>
+
+                    <button
+                      className="m-2 justify-items-end rounded-lg bg-purple-500 p-4 px-4 py-2 font-bold text-white hover:bg-purple-700"
+                      onClick={() =>
+                        mutate({
+                          id: item.id,
+                        })
+                      }
                     >
-                      <span className="flex-grow self-center">
-                        {item.title}
-                      </span>
-                      <button className="justify-items-end rounded bg-purple-500 p-4 px-4 py-2 font-bold text-white hover:bg-purple-700">
-                        delete
-                      </button>
-                    </li>
-                  </Link>
+                      delete
+                    </button>
+                  </div>
                 ))
               )}
             </ul>

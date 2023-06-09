@@ -54,4 +54,17 @@ export const postsRouter = createTRPCRouter({
       });
       return new_post;
     }),
+
+  delete: privateProcedure
+    .input(z.object({ id: z.number() }))
+    .mutation(async ({ ctx, input }) => {
+      const authorId = ctx.userId;
+      if (!authorId) throw new TRPCError({ code: "UNAUTHORIZED" });
+      const deletePost = await ctx.prisma.posts.delete({
+        where: {
+          id: input.id,
+        },
+      });
+      return deletePost;
+    }),
 });
