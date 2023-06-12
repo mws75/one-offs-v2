@@ -57,7 +57,7 @@ const PostFeed = () => {
   return (
     <div className="m-2 flex flex-wrap">
       {data.map((post) => (
-        <div key={post.id} className="p-2">
+        <div key={post.id} className="mx-1 p-2">
           <PostObject {...post} key={post.id} />
         </div>
       ))}
@@ -90,7 +90,6 @@ const Home: NextPage = () => {
           </div>
           {isSignedIn && (
             <div>
-              <p>{`You are signed in as : ${user.emailAddresses}`}</p>
               <div className="flex flex-wrap">
                 <RecentlyViewedObject />
                 <PostFeed />

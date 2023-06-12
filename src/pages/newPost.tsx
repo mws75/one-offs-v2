@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useUser } from "@clerk/nextjs";
 import { api } from "../utils/api";
 import { type NextPage } from "next";
+import { PageLayout } from "~/components/layouts";
 
 export const NewPost = () => {
   const [markdown, setMarkdown] = useState("");
@@ -49,12 +50,13 @@ export const NewPost = () => {
 
   return (
     <>
-      <h1 className="m-4">New Post</h1>
+      <PageLayout>
+        <h1 className="m-4">New Post</h1>
 
-      <label className="m-4 mb-2 block text-sm font-medium text-gray-900 dark:text-white">
-        Your message
-      </label>
-      <div className="min-h-550">
+        <label className="m-4 mb-2 block text-sm font-medium text-gray-900 dark:text-white">
+          Your message
+        </label>
+
         <input
           id="title"
           className="m-5 block w-9/12 rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
@@ -64,34 +66,35 @@ export const NewPost = () => {
         ></input>
         <textarea
           id="message"
-          className="!important min-h-450  m-5 block w-9/12 rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+          className="!important m-5  block min-h-[50%] w-9/12 rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
           placeholder="Write your thoughts here..."
           value={markdown}
           onChange={handleChange}
         ></textarea>
-      </div>
-      <div className="m-5">
-        <ReactMarkdown className="prose">{markdown}</ReactMarkdown>
-      </div>
-      <div className="flex">
-        <button
-          onClick={() =>
-            mutate({
-              title: post_title,
-              content: markdown,
-              profile_image_url: user?.profileImageUrl || "none",
-            })
-          }
-          className="m-5 rounded bg-blue-500 p-4 px-4 py-2 font-bold text-white hover:bg-blue-700"
-        >
-          Submit
-        </button>
-        <Link href="/">
-          <button className="m-5 rounded bg-blue-500 p-4 px-4 py-2 font-bold text-white hover:bg-blue-700">
-            Cancel
+
+        <div className="m-5">
+          <ReactMarkdown className="prose">{markdown}</ReactMarkdown>
+        </div>
+        <div className="flex">
+          <button
+            onClick={() =>
+              mutate({
+                title: post_title,
+                content: markdown,
+                profile_image_url: user?.profileImageUrl || "none",
+              })
+            }
+            className="my-5 ml-5 rounded bg-blue-500 p-4 px-4 py-2 font-bold text-white hover:bg-blue-700"
+          >
+            Submit
           </button>
-        </Link>
-      </div>
+          <Link href="/">
+            <button className="m-5 rounded bg-blue-500 p-4 px-4 py-2 font-bold text-white hover:bg-blue-700">
+              Cancel
+            </button>
+          </Link>
+        </div>
+      </PageLayout>
     </>
   );
 };

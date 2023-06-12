@@ -128,6 +128,12 @@ export const UserProfile = () => {
               )}
             </ul>
           </div>
+          <Link href={`/newPost`}>
+            <button className="ml-4 rounded bg-purple-500 p-4 px-4 py-2 font-bold text-white hover:bg-purple-700">
+              Createt New Post
+            </button>
+          </Link>
+
           <Link href="/">
             <button className="m-4 mt-5 rounded bg-purple-500 p-4 px-4 py-2 font-bold text-white hover:bg-purple-700">
               home

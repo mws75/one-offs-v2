@@ -8,6 +8,8 @@ import { udpatedRecentlyViewedJson } from "../../server/helpers/dataHelper";
 import { useUser } from "@clerk/nextjs";
 import { useEffect, useState } from "react";
 import { PageLayout } from "~/components/layouts";
+import { LoadingSpinner } from "~/components/loadingspinner";
+import React from "react";
 
 const useUserProfile = (userId: string) => {
   const { data, isError, isLoading, error } = api.profile.getById.useQuery({
@@ -70,13 +72,20 @@ const SinglePagePost = () => {
     };
     updateData();
   }, [post_data.data, num_id]);
+  if (post_data.isLoading) {
+    return (
+      <div className="flex min-h-screen items-center justify-center">
+        <LoadingSpinner />
+      </div>
+    );
+  }
 
   if (!post_data.data) return <div>{`404 and id: ${id}`}</div>;
   return (
     <>
       <div className="bg-gradient-to-r from-purple-300 to-pink-200">
         <PageLayout>
-          <div className="ml-5 mr-5 h-screen rounded-lg bg-white p-4 drop-shadow-lg">
+          <div className="ml-5 mr-5 h-fit rounded-lg bg-white p-4 drop-shadow-lg">
             <div className="m-5">
               <h1>
                 <ReactMarkdown className="prose">{`#  ${post_data.data.title}`}</ReactMarkdown>
