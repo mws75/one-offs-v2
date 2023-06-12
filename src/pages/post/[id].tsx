@@ -36,9 +36,10 @@ const CodeBlock: React.FC<CodeBlockProps> = ({
       children={String(children)}
       customStyle={{
         border: "none",
-        borderRadius: "none",
+        borderRadius: "10px",
         padding: "15px",
-        margin: "0px",
+        margin: "10px",
+        width: "100%",
       }}
     />
   ) : (
@@ -130,7 +131,6 @@ const SinglePagePost = () => {
               <ReactMarkdown
                 plugins={[remarkGfm]}
                 components={{ code: CodeBlock }}
-                className="prose"
               >
                 {post_data.data.post}
               </ReactMarkdown>
