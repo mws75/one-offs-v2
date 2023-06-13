@@ -130,6 +130,7 @@ const SinglePagePost = () => {
             <div className="m-5">
               <ReactMarkdown
                 plugins={[remarkGfm]}
+                className="prose prose-pre:m-0 prose-pre:bg-transparent "
                 components={{ code: CodeBlock }}
               >
                 {post_data.data.post}
