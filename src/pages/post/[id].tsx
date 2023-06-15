@@ -128,13 +128,10 @@ const SinglePagePost = () => {
               </h1>
             </div>
             <div className="m-5">
-              <ReactMarkdown
-                plugins={[remarkGfm]}
-                className="prose prose-pre:m-0 prose-pre:bg-transparent "
-                components={{ code: CodeBlock }}
-              >
+              <ReactMarkdown className="prose prose-pre:m-0 prose-pre:bg-transparent ">
                 {post_data.data.post}
               </ReactMarkdown>
+
               <Link href="/">
                 <button className="mt-5 rounded bg-purple-500 p-4 px-4 py-2 font-bold text-white hover:bg-purple-700">
                   home
