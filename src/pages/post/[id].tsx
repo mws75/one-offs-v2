@@ -1,8 +1,6 @@
-import { NextPage } from "next";
 import { useRouter } from "next/router";
 import ReactMarkdown from "react-markdown";
-import { api, RouterOutputs } from "~/utils/api";
-import { profileRouter } from "../../server/api/routers/profile";
+import { api } from "~/utils/api";
 import Link from "next/link";
 import { udpatedRecentlyViewedJson } from "../../server/helpers/dataHelper";
 import { useUser } from "@clerk/nextjs";
@@ -10,42 +8,42 @@ import { useEffect, useState } from "react";
 import { PageLayout } from "~/components/layouts";
 import { LoadingSpinner } from "~/components/loadingspinner";
 import React from "react";
-import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import { okaidia } from "react-syntax-highlighter/dist/esm/styles/prism";
-import remarkGfm from "remark-gfm";
-import language from "react-syntax-highlighter/dist/esm/languages/hljs/1c";
-import { ReactNode } from "react";
+// import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+// import { okaidia } from "react-syntax-highlighter/dist/esm/styles/prism";
+// import remarkGfm from "remark-gfm";
+// import language from "react-syntax-highlighter/dist/esm/languages/hljs/1c";
+// import { ReactNode } from "react";
 
-interface CodeBlockProps {
-  inline: boolean;
-  className: string;
-  children: ReactNode;
-}
+// interface CodeBlockProps {
+//   inline: boolean;
+//   className: string;
+//   children: ReactNode;
+// }
 
-const CodeBlock: React.FC<CodeBlockProps> = ({
-  inline,
-  className,
-  children,
-}) => {
-  const match = /language-(\w+)/.exec(className || "");
-  return !inline && match ? (
-    <SyntaxHighlighter
-      style={okaidia}
-      language={match[1]}
-      PreTag="div"
-      children={String(children)}
-      customStyle={{
-        border: "none",
-        borderRadius: "10px",
-        padding: "15px",
-        margin: "10px",
-        width: "100%",
-      }}
-    />
-  ) : (
-    <code className={className}>{children}</code>
-  );
-};
+// const CodeBlock: React.FC<CodeBlockProps> = ({
+//   inline,
+//   className,
+//   children,
+// }) => {
+//   const match = /language-(\w+)/.exec(className || "");
+//   return !inline && match ? (
+//     <SyntaxHighlighter
+//       style={okaidia}
+//       language={match[1]}
+//       PreTag="div"
+//       children={String(children)}
+//       customStyle={{
+//         border: "none",
+//         borderRadius: "10px",
+//         padding: "15px",
+//         margin: "10px",
+//         width: "100%",
+//       }}
+//     />
+//   ) : (
+//     <code className={className}>{children}</code>
+//   );
+// };
 
 const useUserProfile = (userId: string) => {
   const { data, isError, isLoading, error } = api.profile.getById.useQuery({
