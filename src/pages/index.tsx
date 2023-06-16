@@ -92,6 +92,20 @@ const Home: NextPage = () => {
             <div>
               <div className="flex flex-wrap">
                 <RecentlyViewedObject />
+
+                <div className="ml-4 flex w-11/12 items-center shadow-md">
+                  <input
+                    type="text"
+                    placeholder="Search"
+                    className="w-11/12 rounded-l-md bg-slate-100 px-4 py-2 focus:border-purple-500 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                  />
+                  <button
+                    type="button"
+                    className="rounded-r-md bg-purple-500 px-4 py-2 text-white transition-colors hover:bg-purple-600"
+                  >
+                    Search
+                  </button>
+                </div>
                 <PostFeed />
               </div>
 
