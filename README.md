@@ -34,3 +34,22 @@ Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/ver
 {"id": 2, "title": "post2"},
 {"id": 3, "title": "post3"}
 ]
+
+# The Stack
+
+## Dateabase Stack
+
+I am using a MySQL instance hosted on PlanetScale
+Prisma connects to the PlanetScale account
+
+## Authentication
+
+Using Clerk
+
+## Deployment
+
+Using Vercel
+
+## Search Engine
+
+Using Elasticsearch
