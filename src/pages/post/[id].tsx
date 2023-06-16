@@ -126,7 +126,7 @@ const SinglePagePost = () => {
               </h1>
             </div>
             <div className="m-5">
-              <ReactMarkdown className="prose prose-pre:m-0 prose-pre:bg-transparent ">
+              <ReactMarkdown className="prose prose-pre:m-0">
                 {post_data.data.post}
               </ReactMarkdown>
 
