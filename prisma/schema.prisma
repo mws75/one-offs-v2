@@ -31,3 +31,8 @@ model Users {
   liked_posts String? @db.VarChar(255)
   profile_image_url String? @db.VarChar(255)
 }
+
+model SearchQuery {
+  id String @id @default(cuid())
+  query String
+}
