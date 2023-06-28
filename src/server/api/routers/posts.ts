@@ -33,6 +33,16 @@ export const postsRouter = createTRPCRouter({
       return post;
     }),
 
+  getByTitle: publicProcedure
+    .input(z.object({ queryString: z.string() }))
+    .query(async ({ ctx, input }) => {
+      const posts = await ctx.prisma.posts.findMany({
+        where: { title: { contains: input.queryString } },
+      });
+      if (!posts) throw new TRPCError({ code: "NOT_FOUND" });
+      return posts;
+    }),
+
   create: privateProcedure
     .input(
       z.object({
