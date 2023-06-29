@@ -10,6 +10,8 @@ const SearchPage = () => {
     queryString: encodedSearchQuery,
   });
 
+  // TODO : do something with the return objects, probably display in datafeed.
+
   console.log(data);
 
   return (
