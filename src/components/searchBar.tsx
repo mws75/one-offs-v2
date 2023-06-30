@@ -3,6 +3,7 @@ import { useState } from "react";
 
 const SearchBar = () => {
   const [searchQuery, setSearchQuery] = useState("");
+
   const router = useRouter();
 
   const onSearch = (event: React.FormEvent) => {
