@@ -42,11 +42,6 @@ const Home: NextPage = () => {
             <div>
               <div className="flex flex-wrap">
                 <RecentlyViewedObject />
-
-                <div className="ml-4 flex w-11/12 items-center shadow-md">
-                  <SearchBar />
-                </div>
-
                 <PostFeed />
               </div>
 
