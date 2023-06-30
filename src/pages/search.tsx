@@ -6,9 +6,13 @@ const SearchPage = () => {
   const searchQuery = search ? search.get("q") : null;
 
   const encodedSearchQuery = encodeURI(searchQuery || "");
+
   const { data, isLoading: postsLoading } = api.posts.getByTitle.useQuery({
     queryString: encodedSearchQuery,
   });
+
+  // TODO : do something with the return objects, probably display in datafeed.
+  console.log(encodedSearchQuery);
 
   console.log(data);
 

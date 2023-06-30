@@ -84,8 +84,6 @@ export const UserProfile = () => {
     },
   });
 
-  console.log(userPosts.data);
-
   return (
     <>
       <div className="bg-gradient-to-r from-purple-300 to-pink-200">
