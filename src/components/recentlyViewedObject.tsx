@@ -46,8 +46,6 @@ export const RecentlyViewedObject = () => {
     String(user_profile.data?.recent_posts_json)
   );
 
-  console.log(recentPostsJson);
-
   return (
     <>
       <div className=" m-4 flex grid h-40 w-11/12 grid-flow-row-dense grid-cols-6 items-center rounded-lg  bg-slate-100 shadow-md">

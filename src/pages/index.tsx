@@ -4,67 +4,16 @@ import { LoadingPage } from "~/components/loadingspinner";
 
 import { type NextPage } from "next";
 import Head from "next/head";
-import { api } from "~/utils/api";
-import PostObject from "~/components/postobject";
 import { PageLayout } from "~/components/layouts";
 import Link from "next/link";
-import { useEffect, useState } from "react";
 
 import { RecentlyViewedObject } from "~/components/recentlyViewedObject";
 import background_img from "../../public/background_img.jpeg";
 import default_profile_pic from "../../public/default_profile_pic.png";
 import SearchBar from "~/components/searchBar";
+import PostFeed from "~/components/postFeed";
 
 // TODO
-
-const PostFeed = () => {
-  const { user } = useUser();
-  if (!user) return null;
-
-  const userId = user.id;
-  const profile_image_url = user.profileImageUrl;
-
-  const { data, isLoading: postsLoading } = api.posts.getAll.useQuery();
-  const user_profile = api.profile.getById.useQuery({ id: userId });
-  const { mutate } = api.profile.insertNewUser.useMutation({});
-  const [dataFeteched, setDataFetched] = useState(false);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      if (user_profile.data === undefined) {
-        try {
-          await mutate({ profile_image_url });
-          setDataFetched(true);
-        } catch (error) {
-          console.log(error);
-          alert("something went wrong");
-        }
-      } else {
-        console.log("user has already been added");
-      }
-    };
-    if (!dataFeteched) {
-      fetchData();
-    }
-  }, []);
-
-  if (postsLoading) {
-    return <LoadingPage />;
-  }
-  if (!data) {
-    return <p>No posts found</p>;
-  }
-
-  return (
-    <div className="m-2 flex flex-wrap">
-      {data.map((post) => (
-        <div key={post.id} className="mx-1 p-2">
-          <PostObject {...post} key={post.id} />
-        </div>
-      ))}
-    </div>
-  );
-};
 
 const Home: NextPage = () => {
   const { isLoaded: userLoaded, isSignedIn, user } = useUser();
@@ -93,11 +42,6 @@ const Home: NextPage = () => {
             <div>
               <div className="flex flex-wrap">
                 <RecentlyViewedObject />
-
-                <div className="ml-4 flex w-11/12 items-center shadow-md">
-                  <SearchBar />
-                </div>
-
                 <PostFeed />
               </div>
 

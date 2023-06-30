@@ -3,18 +3,19 @@ import { useState } from "react";
 
 const SearchBar = () => {
   const [searchQuery, setSearchQuery] = useState("");
+
   const router = useRouter();
 
   const onSearch = (event: React.FormEvent) => {
     event.preventDefault();
 
     const encodedSearch = encodeURIComponent(searchQuery);
-    router.push(`/search?q=${encodedSearch}`);
+    //router.push(`/search?q=${encodedSearch}`);
   };
 
   return (
     <>
-      <form className="flex justify-center" onSubmit={onSearch}>
+      <form className="flex w-11/12 items-center" onSubmit={onSearch}>
         <input
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
