@@ -20,9 +20,10 @@ const PostFeed = () => {
   const [searchTrigger, setSearchTrigger] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const encodedSearch = encodeURIComponent(searchQuery);
-  const { data: filteredData } = api.posts.getByTitle.useQuery({
-    queryString: encodedSearch,
-  });
+  const { data: filteredData, isLoading: filteredPostsLoading } =
+    api.posts.getByTitle.useQuery({
+      queryString: encodedSearch,
+    });
 
   const [data, setData] = useState(initialData);
   const user_profile = api.profile.getById.useQuery({ id: userId });
@@ -34,6 +35,9 @@ const PostFeed = () => {
   }, [initialData]);
 
   useEffect(() => {
+    if (filteredPostsLoading) {
+      return;
+    }
     setData(filteredData);
   }, [searchTrigger]);
 
@@ -57,7 +61,7 @@ const PostFeed = () => {
   }, []);
 
   const onSearch = (event: React.FormEvent) => {
-    console.log("searching...");
+    console.log("searching with filter...");
     event.preventDefault();
     setSearchTrigger(!searchTrigger);
     setData(data);
@@ -66,14 +70,15 @@ const PostFeed = () => {
   if (postsLoading) {
     return <LoadingPage />;
   }
+
   if (!data) {
-    return <p>No posts found</p>;
+    return <p className="m-4">no data found </p>;
   }
 
   return (
     <>
-      <div className="ml-4 flex w-11/12 items-center shadow-md">
-        <form className="flex w-11/12 items-center" onSubmit={onSearch}>
+      <div className="mb-4 ml-4 flex w-11/12 items-center shadow-md">
+        <form className="flex w-full items-center" onSubmit={onSearch}>
           <input
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}

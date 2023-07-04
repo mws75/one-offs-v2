@@ -53,3 +53,8 @@ Using Vercel
 ## Search Engine
 
 Using Elasticsearch
+
+## TODO
+
+1. Edit Posts
+2. Posts are loading funcky on search, need to figure out what is happening.
