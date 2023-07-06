@@ -43,7 +43,10 @@ export const NewPost = () => {
       if (errorMessage && errorMessage[0]) {
         alert(errorMessage[0]);
       } else {
-        alert("Something went wrong, failed to Post");
+        alert(
+          "Something went wrong, failed to Post, Post must be < 3000 characters." +
+            String(error)
+        );
       }
     },
   });
