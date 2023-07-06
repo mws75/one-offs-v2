@@ -44,7 +44,7 @@ export const NewPost = () => {
         alert(errorMessage[0]);
       } else {
         alert(
-          "Something went wrong, failed to Post, Post must be < 3000 characters." +
+          "Something went wrong, failed to Post, Post must be < 5000 characters." +
             String(error)
         );
       }
