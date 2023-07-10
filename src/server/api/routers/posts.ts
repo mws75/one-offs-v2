@@ -77,4 +77,19 @@ export const postsRouter = createTRPCRouter({
       });
       return deletePost;
     }),
+
+  update: privateProcedure
+    .input(z.object({ id: z.number(), title: z.string(), content: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      const updatePost = await ctx.prisma.posts.update({
+        where: {
+          id: input.id,
+        },
+        data: {
+          title: input.title,
+          post: input.content,
+        },
+      });
+      return updatePost;
+    }),
 });
