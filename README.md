@@ -56,5 +56,6 @@ Using Elasticsearch
 
 ## TODO
 
-1. Edit Posts
-2. Login Screen that looks pretty.
+1. Login Screen that looks pretty.
+2. Increase the width of Markdown on Post Pages
+3. Increase the background to fit the entire screen.

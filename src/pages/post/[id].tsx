@@ -85,13 +85,10 @@ const SinglePagePost = () => {
   });
 
   useEffect(() => {
-    console.log("using useEffect...");
     const updateData = async () => {
       if (user_profile.data?.recent_posts_json && post_data.data?.post) {
-        console.log("passing the if statement...");
         const newPost = `{"id":${num_id},"title":"${post_data.data.title}"}`;
         const recent_posts_json = user_profile.data?.recent_posts_json;
-        console.log(newPost);
         try {
           const new_recent_posts_json = udpatedRecentlyViewedJson(
             recent_posts_json,

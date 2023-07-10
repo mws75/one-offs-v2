@@ -84,6 +84,8 @@ export const UserProfile = () => {
     },
   });
 
+  const editPost = (postId: number) => {};
+
   return (
     <>
       <div className="bg-gradient-to-r from-purple-300 to-pink-200">
@@ -121,6 +123,11 @@ export const UserProfile = () => {
                     >
                       delete
                     </button>
+                    <Link href={`/editPost/${item.id}`}>
+                      <button className="m-2 justify-items-end rounded-lg bg-purple-500 p-4 px-4 py-2 font-bold text-white hover:bg-purple-700">
+                        edit
+                      </button>
+                    </Link>
                   </div>
                 ))
               )}
