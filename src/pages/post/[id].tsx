@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import { PageLayout } from "~/components/layouts";
 import { LoadingSpinner } from "~/components/loadingspinner";
 import React from "react";
+
 // import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 // import { okaidia } from "react-syntax-highlighter/dist/esm/styles/prism";
 // import remarkGfm from "remark-gfm";
@@ -116,22 +117,24 @@ const SinglePagePost = () => {
     <>
       <div className="h-screen bg-gradient-to-r from-purple-300 to-pink-200">
         <PageLayout>
-          <div className="ml-5 mr-5 h-fit rounded-lg bg-white p-4 drop-shadow-lg">
-            <div className="m-5">
-              <h1>
-                <ReactMarkdown className="prose">{`#  ${post_data.data.title}`}</ReactMarkdown>
-              </h1>
-            </div>
-            <div className="m-5">
-              <ReactMarkdown className="prose prose-pre:m-0">
-                {post_data.data.post}
-              </ReactMarkdown>
+          <div className="rounded-lg bg-white p-4 drop-shadow-lg">
+            <div className="markdown-container">
+              <div className="m-2">
+                <h1>
+                  <ReactMarkdown className="prose">{`#  ${post_data.data.title}`}</ReactMarkdown>
+                </h1>
+              </div>
+              <div className="m-2 mt-5">
+                <ReactMarkdown className="prose">
+                  {post_data.data.post}
+                </ReactMarkdown>
 
-              <Link href="/">
-                <button className="mt-5 rounded bg-purple-500 p-4 px-4 py-2 font-bold text-white hover:bg-purple-700">
-                  home
-                </button>
-              </Link>
+                <Link href="/">
+                  <button className="mt-5 rounded bg-purple-500 p-4 px-4 py-2 font-bold text-white hover:bg-purple-700">
+                    home
+                  </button>
+                </Link>
+              </div>
             </div>
           </div>
         </PageLayout>

@@ -1,3 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.markdown-container .prose .p {
+  width: 95% !important;
+}
