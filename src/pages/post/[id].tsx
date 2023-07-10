@@ -114,7 +114,7 @@ const SinglePagePost = () => {
   if (!post_data.data) return <div>{`404 and id: ${id}`}</div>;
   return (
     <>
-      <div className="bg-gradient-to-r from-purple-300 to-pink-200">
+      <div className="h-screen bg-gradient-to-r from-purple-300 to-pink-200">
         <PageLayout>
           <div className="ml-5 mr-5 h-fit rounded-lg bg-white p-4 drop-shadow-lg">
             <div className="m-5">
