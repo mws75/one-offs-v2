@@ -3,8 +3,6 @@ import { PropsWithChildren, useEffect } from "react";
 export const PageLayout = (props: PropsWithChildren<{}>) => {
   useEffect(() => {
     document.title = "Byte-Size-Tech";
-    const favicon = document.getElementById("favicon");
-    favicon?.setAttribute("href", "../../public/pixel_shark_2.png");
   }, []);
 
   return (
