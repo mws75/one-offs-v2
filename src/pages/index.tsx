@@ -39,7 +39,7 @@ const Home: NextPage = () => {
                 <div>
                   <Image className=" max-w-xl" src={logo} alt="Logo" />
                 </div>
-                <div className="w-32 justify-center rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700">
+                <div className="justify-center rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700">
                   <SignInButton />
                 </div>
               </div>
