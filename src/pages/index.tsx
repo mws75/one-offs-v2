@@ -39,8 +39,15 @@ const Home: NextPage = () => {
                 <div>
                   <Image className=" max-w-xl" src={logo} alt="Logo" />
                 </div>
-                <div className="justify-center rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700">
-                  <SignInButton />
+                <div className="flex flex-col items-center justify-center">
+                  <div className="justify-center rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700">
+                    <SignInButton />
+                  </div>
+                  <Link href="/about">
+                    <button className="m-5 rounded bg-blue-500 p-4 px-4 py-2 font-bold text-white hover:bg-blue-700">
+                      About
+                    </button>
+                  </Link>
                 </div>
               </div>
             )}
@@ -59,7 +66,7 @@ const Home: NextPage = () => {
                   </button>
                 </Link>
               </div>
-              <div className="m-5 w-32 rounded bg-pink-400 px-4 py-2 font-bold text-white hover:bg-pink-700">
+              <div className=" m-5 w-32 rounded bg-pink-400 px-4 py-2 font-bold text-white hover:bg-pink-700">
                 <SignOutButton />
               </div>
             </div>
