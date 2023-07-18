@@ -9,6 +9,13 @@ import { PageLayout } from "~/components/layouts";
 import { LoadingSpinner } from "~/components/loadingspinner";
 import React from "react";
 
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+import {
+  coy,
+  oneDark,
+  oneLight,
+} from "react-syntax-highlighter/dist/esm/styles/prism";
+
 // import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 // import { okaidia } from "react-syntax-highlighter/dist/esm/styles/prism";
 // import remarkGfm from "remark-gfm";
@@ -124,10 +131,26 @@ const SinglePagePost = () => {
               </h1>
             </div>
             <div className="m-2 mt-5">
-              <ReactMarkdown className="prose">
-                {post_data.data.post}
-              </ReactMarkdown>
-
+              <ReactMarkdown
+                children={post_data.data.post}
+                components={{
+                  code({ node, inline, className, children, ...props }) {
+                    const match = /language-(\w+)/.exec(className || "");
+                    return !inline && match ? (
+                      <SyntaxHighlighter
+                        children={String(children).replace(/\n$/, "")}
+                        language={match[1]}
+                        style={oneDark}
+                        {...props}
+                      />
+                    ) : (
+                      <code className={className} {...props}>
+                        {children}
+                      </code>
+                    );
+                  },
+                }}
+              />
               <Link href="/">
                 <button className="mt-5 rounded bg-purple-500 p-4 px-4 py-2 font-bold text-white hover:bg-purple-700">
                   home

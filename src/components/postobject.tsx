@@ -16,7 +16,7 @@ export const PostObject = (props: postedContent) => {
     <Link href={`/post/${my_id}`}>
       <span className="relative">
         <div className="w-120 h-40 w-64 rounded-lg bg-slate-100 p-4 shadow-md hover:bg-slate-300">
-          {title}``
+          {title}
           <div className="absolute bottom-3 right-3">
             <Image
               src={pic_url}
