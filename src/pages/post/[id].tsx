@@ -4,7 +4,7 @@ import { api } from "~/utils/api";
 import Link from "next/link";
 import { udpatedRecentlyViewedJson } from "../../server/helpers/dataHelper";
 import { useUser } from "@clerk/nextjs";
-import { useEffect, useState } from "react";
+import { CSSProperties, useEffect, useState } from "react";
 import { PageLayout } from "~/components/layouts";
 import { LoadingSpinner } from "~/components/loadingspinner";
 import React from "react";
@@ -134,7 +134,7 @@ const SinglePagePost = () => {
               <ReactMarkdown
                 children={post_data.data.post}
                 components={{
-                  code({ node, inline, className, children, ...props }) {
+                  code({ node, inline, className, children, style, ...props }) {
                     const match = /language-(\w+)/.exec(className || "");
                     return !inline && match ? (
                       <SyntaxHighlighter
@@ -151,6 +151,7 @@ const SinglePagePost = () => {
                   },
                 }}
               />
+
               <Link href="/">
                 <button className="mt-5 rounded bg-purple-500 p-4 px-4 py-2 font-bold text-white hover:bg-purple-700">
                   home
