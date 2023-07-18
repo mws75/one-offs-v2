@@ -4,17 +4,13 @@ import { api } from "~/utils/api";
 import Link from "next/link";
 import { udpatedRecentlyViewedJson } from "../../server/helpers/dataHelper";
 import { useUser } from "@clerk/nextjs";
-import { CSSProperties, useEffect, useState } from "react";
+import { useEffect } from "react";
 import { PageLayout } from "~/components/layouts";
 import { LoadingSpinner } from "~/components/loadingspinner";
 import React from "react";
 
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import {
-  coy,
-  oneDark,
-  oneLight,
-} from "react-syntax-highlighter/dist/esm/styles/prism";
+import { oneDark } from "react-syntax-highlighter/dist/esm/styles/prism";
 
 const useUserProfile = (userId: string) => {
   const { data, isError, isLoading, error } = api.profile.getById.useQuery({
