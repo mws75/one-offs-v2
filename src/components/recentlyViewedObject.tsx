@@ -5,6 +5,8 @@ import default_profile_pic from "../../public/default_profile_pic.png";
 import { useUser } from "@clerk/nextjs";
 import { useEffect, useState } from "react";
 import { LoadingPage } from "./loadingspinner";
+import sharkImage from "../../public/whale-shark-cartoon-pixel-1.png";
+import logo from "../../public/ByteSizeTechLogo.png";
 // TODO Makes the items links to the pages.
 
 interface Item {
@@ -78,6 +80,19 @@ export const RecentlyViewedObject = () => {
               </Link>
             ))}
           </ul>
+        </div>
+        <div className="col-span-1 m-2">
+          <Link href={`/about`}>
+            <span>
+              <Image
+                src={logo}
+                alt={"shark"}
+                layout="responsive"
+                height={120}
+                width={120}
+              />
+            </span>
+          </Link>
         </div>
 
         <div className="col-span-1 m-4"></div>

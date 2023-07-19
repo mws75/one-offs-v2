@@ -91,7 +91,7 @@ const SinglePagePost = () => {
             </div>
             <div className="m-2 mt-5">
               <ReactMarkdown
-                className="prose"
+                className="prose prose-lg"
                 children={post_data.data.post}
                 components={{
                   code({ node, inline, className, children, style, ...props }) {
