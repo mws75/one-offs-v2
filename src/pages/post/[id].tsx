@@ -81,9 +81,9 @@ const SinglePagePost = () => {
   if (!post_data.data) return <div>{`404 and id: ${id}`}</div>;
   return (
     <>
-      <div className="h-screen bg-gradient-to-r from-purple-300 to-pink-200">
+      <div className="from-purple-300 to-pink-200 h-screen bg-gradient-to-r">
         <PageLayout>
-          <div className="rounded-lg bg-white p-4 drop-shadow-lg">
+          <div className="bg-white rounded-lg p-4 drop-shadow-lg">
             <div className="m-2">
               <h1>
                 <ReactMarkdown className="prose">{`#  ${post_data.data.title}`}</ReactMarkdown>
@@ -91,7 +91,7 @@ const SinglePagePost = () => {
             </div>
             <div className="m-2 mt-5">
               <ReactMarkdown
-                className="prose prose-lg"
+                className="prose-code:text-md prose prose-pre:max-w-none prose-pre:bg-codeGrey"
                 children={post_data.data.post}
                 components={{
                   code({ node, inline, className, children, style, ...props }) {
@@ -113,7 +113,7 @@ const SinglePagePost = () => {
               />
 
               <Link href="/">
-                <button className="mt-5 rounded bg-purple-500 p-4 px-4 py-2 font-bold text-white hover:bg-purple-700">
+                <button className="bg-purple-500 text-white hover:bg-purple-700 mt-5 rounded p-4 px-4 py-2 font-bold">
                   home
                 </button>
               </Link>
