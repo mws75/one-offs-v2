@@ -10,7 +10,7 @@ import { LoadingSpinner } from "~/components/loadingspinner";
 import React from "react";
 
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import { oneDark } from "react-syntax-highlighter/dist/esm/styles/prism";
+import { oneDark } from "react-syntax-highlighter/dist/cjs/styles/prism";
 
 const useUserProfile = (userId: string) => {
   const { data, isError, isLoading, error } = api.profile.getById.useQuery({
@@ -91,6 +91,7 @@ const SinglePagePost = () => {
             </div>
             <div className="m-2 mt-5">
               <ReactMarkdown
+                className="prose"
                 children={post_data.data.post}
                 components={{
                   code({ node, inline, className, children, style, ...props }) {
