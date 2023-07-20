@@ -32,18 +32,6 @@ const notify = () => {
   alert("Copied to clipboard");
 };
 
-// const CodeBlock = ({ string: code }) => {
-//   return (
-//     <div className="relative">
-//       <button className="absolute right-0 top-0 flex flex-row p-2">
-//         <CopyToClipboard text={code} onCopy={() => notify()}>
-//           <IoIosCopy className="m-1 basis-1/4 text-lg hover:text-white" />
-//         </CopyToClipboard>
-//       </button>
-//     </div>
-//   );
-// };
-
 const SinglePagePost = () => {
   const router = useRouter();
   const { id } = router.query;
