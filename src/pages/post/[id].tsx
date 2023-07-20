@@ -7,6 +7,8 @@ import { useUser } from "@clerk/nextjs";
 import { useEffect } from "react";
 import { PageLayout } from "~/components/layouts";
 import { LoadingSpinner } from "~/components/loadingspinner";
+import { IoIosCopy, IoIosCheckmarkCircleOutline } from "react-icons/io";
+import { CopyToClipboard } from "react-copy-to-clipboard";
 import React from "react";
 
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
@@ -25,6 +27,22 @@ const usePostInfo = (post_id: number) => {
   });
   return { data, isError, isLoading, error };
 };
+
+const notify = () => {
+  alert("Copied to clipboard");
+};
+
+// const CodeBlock = ({ string: code }) => {
+//   return (
+//     <div className="relative">
+//       <button className="absolute right-0 top-0 flex flex-row p-2">
+//         <CopyToClipboard text={code} onCopy={() => notify()}>
+//           <IoIosCopy className="m-1 basis-1/4 text-lg hover:text-white" />
+//         </CopyToClipboard>
+//       </button>
+//     </div>
+//   );
+// };
 
 const SinglePagePost = () => {
   const router = useRouter();
@@ -81,9 +99,9 @@ const SinglePagePost = () => {
   if (!post_data.data) return <div>{`404 and id: ${id}`}</div>;
   return (
     <>
-      <div className="from-purple-300 to-pink-200 h-screen bg-gradient-to-r">
+      <div className="h-screen bg-gradient-to-r from-purple-300 to-pink-200">
         <PageLayout>
-          <div className="bg-white rounded-lg p-4 drop-shadow-lg">
+          <div className="rounded-lg bg-white p-4 drop-shadow-lg">
             <div className="m-2">
               <h1>
                 <ReactMarkdown className="prose">{`#  ${post_data.data.title}`}</ReactMarkdown>
@@ -97,12 +115,28 @@ const SinglePagePost = () => {
                   code({ node, inline, className, children, style, ...props }) {
                     const match = /language-(\w+)/.exec(className || "");
                     return !inline && match ? (
-                      <SyntaxHighlighter
-                        children={String(children).replace(/\n$/, "")}
-                        language={match[1]}
-                        style={oneDark}
-                        {...props}
-                      />
+                      <div className="relative">
+                        <button className="absolute right-0 top-0 flex flex-row p-2">
+                          <span>
+                            <CopyToClipboard
+                              text={String(children).replace(/\n$/, "")}
+                              onCopy={() => notify()}
+                            >
+                              <IoIosCopy className="m-1 basis-1/4 text-lg hover:text-white" />
+                            </CopyToClipboard>
+                          </span>
+                        </button>
+
+                        <div>
+                          <SyntaxHighlighter
+                            language={match[1]}
+                            style={oneDark}
+                            {...props}
+                          >
+                            {String(children).replace(/\n$/, "")}
+                          </SyntaxHighlighter>
+                        </div>
+                      </div>
                     ) : (
                       <code className={className} {...props}>
                         {children}
@@ -113,7 +147,7 @@ const SinglePagePost = () => {
               />
 
               <Link href="/">
-                <button className="bg-purple-500 text-white hover:bg-purple-700 mt-5 rounded p-4 px-4 py-2 font-bold">
+                <button className="mt-5 rounded bg-purple-500 p-4 px-4 py-2 font-bold text-white hover:bg-purple-700">
                   home
                 </button>
               </Link>
