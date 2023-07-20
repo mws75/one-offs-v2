@@ -12,7 +12,10 @@ const AboutPage = () => {
     more scrolling down the page filled with of machine learning theories when you want to
     remember how to loop through a Pandas Data Frame. We believe you came
     here for one reason. To find a quick solution so that you can get back
-    to building.`;
+    to building. Our mission is to waste our time
+    writing so you don't have to waste yours reading. \n
+Our expansive team of some of the worlds leading software engineers work tirelessly to give
+you the best technology related blog posts humanly possible.`;
   return (
     <div className="h-screen bg-gradient-to-r from-purple-300 to-pink-200">
       <PageLayout>
