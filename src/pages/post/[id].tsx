@@ -7,7 +7,8 @@ import { useUser } from "@clerk/nextjs";
 import { useEffect } from "react";
 import { PageLayout } from "~/components/layouts";
 import { LoadingSpinner } from "~/components/loadingspinner";
-import { IoIosCopy, IoIosCheckmarkCircleOutline } from "react-icons/io";
+import { IoIosCopy } from "react-icons/io";
+
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import React from "react";
 
