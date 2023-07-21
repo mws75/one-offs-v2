@@ -97,7 +97,13 @@ const SinglePagePost = () => {
             </div>
             <div className="m-2 mt-5">
               <ReactMarkdown
-                className="prose-code:text-md prose prose-pre:max-w-none prose-pre:bg-codeGrey"
+                className="prose-md prose 
+                           w-full max-w-none
+                           prose-p:w-11/12 
+                           prose-code:text-base
+                           prose-pre:w-full 
+                           prose-pre:bg-codeGrey 
+                           prose-li:w-11/12"
                 children={post_data.data.post}
                 components={{
                   code({ node, inline, className, children, style, ...props }) {
