@@ -27,7 +27,7 @@ model Users {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   user_id String @unique @db.VarChar(255)
-  recent_posts_json String? @db.VarChar(255)
+  recent_posts_json String? @db.VarChar(5000)
   liked_posts String? @db.VarChar(255)
   profile_image_url String? @db.VarChar(255)
 }
@@ -35,4 +35,12 @@ model Users {
 model SearchQuery {
   id String @id @default(cuid())
   query String
+}
+
+model LikePosts {
+  id Int @default(autoincrement()) @id
+  createdAt DateTime @default(now())
+  user_id String @db.VarChar(255)
+  post_id Int 
+  post_liked Int
 }

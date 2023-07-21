@@ -2,6 +2,12 @@ import { RouterOutputs } from "../utils/api";
 import Link from "next/link";
 import Image from "next/image";
 import default_profile_pic from "../../public/default_profile_pic.png";
+import {
+  IoIosCopy,
+  IoIosCheckmarkCircleOutline,
+  IoIosThumbsUp,
+} from "react-icons/io";
+import { IoThumbsUpOutline } from "react-icons/io5";
 
 // [number] grabs a single element from the array so we can create a type of posts[0].
 type postedContent = RouterOutputs["posts"]["getAll"][number];
@@ -25,6 +31,11 @@ export const PostObject = (props: postedContent) => {
               height={32}
               className="border-1 ml-1 rounded-full border-black"
             />
+          </div>
+          <div className="absolute bottom-10 left-10">
+            <button className="absolute right-0 top-0 flex flex-row p-2">
+              <IoThumbsUpOutline size={20} />
+            </button>
           </div>
         </div>
       </span>
