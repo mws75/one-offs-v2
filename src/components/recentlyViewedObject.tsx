@@ -50,7 +50,7 @@ export const RecentlyViewedObject = () => {
 
   return (
     <>
-      <div className=" m-4 flex grid h-40 w-11/12 grid-flow-row-dense grid-cols-6 items-center rounded-lg  bg-slate-100 shadow-md">
+      <div className=" h-min-35 m-4 grid w-11/12 grid-cols-6 items-center rounded-lg  bg-slate-100 shadow-md">
         <div className="col-span-1 m-2 justify-items-center">
           <Link href={`/userProfile`}>
             <span>
