@@ -34,7 +34,6 @@ export const NewPost = () => {
       setMarkdown("");
       setPost_title("");
       void ctx.posts.getAll.invalidate();
-      console.log("post has been added");
     },
     onError: (error) => {
       const errorMessage = error.data?.zodError?.fieldErrors.content;
