@@ -54,8 +54,17 @@ Using Vercel
 
 Using Elasticsearch
 
-## TODO
+## Unit testing
 
-1. Login Screen that looks pretty.
-2. Increase the width of Markdown on Post Pages
-3. Increase the background to fit the entire screen.
+Unit tests can be found here: src/tests
+To run the unit test suite run the following command:
+
+```
+$ npm test
+```
+
+\*note:
+a. Make sure the jest.config file has .cjs at the end
+b. add "test": "jest" to the scripts section of the package.config file.
+
+## TODO

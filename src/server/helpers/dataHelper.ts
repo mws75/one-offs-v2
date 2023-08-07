@@ -48,3 +48,25 @@ export const udpatedRecentlyViewedJson = (json: string, new_object: string) => {
     return json;
   }
 };
+
+export const convertJSONtoArray = (jsonString: string, key: string): any[] => {
+  let parsedObject: any;
+
+  try {
+    parsedObject = JSON.parse(jsonString);
+  } catch (error) {
+    throw new Error("Invalid JSON string provided.");
+  }
+
+  if (!Array.isArray(parsedObject)) {
+    throw new Error("Parsed JSON is not an array.");
+  }
+
+  return parsedObject.map((obj) => {
+    if (obj.hasOwnProperty(key)) {
+      return obj[key];
+    } else {
+      throw new Error(`Key "${key}" not found in one or more objects.`);
+    }
+  });
+};

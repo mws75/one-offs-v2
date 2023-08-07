@@ -16,8 +16,9 @@ import { useUser } from "@clerk/nextjs";
 
 // [number] grabs a single element from the array so we can create a type of posts[0].
 type postedContent = RouterOutputs["posts"]["getAll"][number];
+type likedFlag = number;
 
-export const PostObject = (props: postedContent) => {
+export const PostObject = (props: postedContent, number: likedFlag) => {
   const { id, title, profile_image_url } = props;
   const my_id = id.toString();
   const { user } = useUser();

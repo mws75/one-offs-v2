@@ -7,7 +7,8 @@
     "dev": "next dev",
     "postinstall": "prisma generate",
     "lint": "next lint",
-    "start": "next start"
+    "start": "next start",
+    "test": "jest"
   },
   "type": "module",
   "dependencies": {
@@ -19,11 +20,11 @@
     "@trpc/next": "^10.18.0",
     "@trpc/react-query": "^10.18.0",
     "@trpc/server": "^10.18.0",
-    "next": "^13.2.4",
+    "next": "^13.4.13",
     "prismjs": "^1.29.0",
-    "react": "18.2.0",
+    "react": "^18.2.0",
     "react-copy-to-clipboard": "^5.1.0",
-    "react-dom": "18.2.0",
+    "react-dom": "^18.2.0",
     "react-icons": "^4.10.1",
     "react-markdown": "^8.0.7",
     "react-syntax-highlighter": "^15.5.0",
