@@ -125,7 +125,7 @@ const PostFeed = () => {
 
       <div className="m-2 flex flex-wrap">
         {data.map((post) => {
-          const hello = "hello";
+          const liked = likedPosts.includes(post.id) ? 1 : 0;
           return (
             <div key={post.id} className="mx-1 p-2">
               <PostObject {...post} key={post.id} />
