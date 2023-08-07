@@ -2,6 +2,7 @@ import {
   udpatedRecentlyViewedJson,
   checkIfValueExistsInJSONObject,
   checkLengthOfJSON,
+  convertJSONtoArray,
 } from "../server/helpers/dataHelper";
 
 const sampleJSON = `[
@@ -38,4 +39,10 @@ test("should return 0", () => {
   const empty_json_string = "[]";
   const json_length = checkLengthOfJSON(empty_json_string);
   expect(json_length).toBe(0);
+});
+
+test("should return array of integers", () => {
+  const jsonString = '[{ "id": 0 }, { "id": 56 }, { "id": 20 }]';
+  const myArray = convertJSONtoArray(jsonString, "id");
+  expect(myArray).toEqual([0, 56, 20]);
 });

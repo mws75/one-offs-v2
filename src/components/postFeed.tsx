@@ -4,8 +4,17 @@ import PostObject from "~/components/postobject";
 import { useUser } from "@clerk/nextjs";
 import { LoadingPage } from "./loadingspinner";
 import { serialize } from "v8";
+import { convertJSONtoArray } from "../server/helpers/dataHelper";
+import { init } from "next/dist/compiled/@vercel/og/satori";
 
 // Do something like this: https://react.dev/learn/updating-arrays-in-state
+
+// hook to get user's liked posts
+const useLikedPosts = () => {
+  const { data, isError, isLoading, error } =
+    api.likedPosts.getAllIDs.useQuery();
+  return { data, isError, isLoading, error };
+};
 
 const PostFeed = () => {
   const { user } = useUser();
@@ -16,6 +25,9 @@ const PostFeed = () => {
 
   const { data: initialData, isLoading: postsLoading } =
     api.posts.getAll.useQuery();
+
+  const { data: initialLikedPosts, isLoading: likedPostsLoading } =
+    api.likedPosts.getAllIDs.useQuery();
 
   const [searchTrigger, setSearchTrigger] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
@@ -29,10 +41,25 @@ const PostFeed = () => {
   const user_profile = api.profile.getById.useQuery({ id: userId });
   const { mutate } = api.profile.insertNewUser.useMutation({});
   const [dataFeteched, setDataFetched] = useState(false);
+  const [likedPosts, setLikedPosts] = useState<number[]>([]);
 
   useEffect(() => {
     setData(initialData);
   }, [initialData]);
+
+  useEffect(() => {
+    console.log(likedPosts);
+    if (likedPostsLoading) {
+      return;
+    }
+    if (initialLikedPosts === undefined) {
+      return;
+    }
+    const initialLikedPostsString = JSON.stringify(initialLikedPosts);
+    const likedPostsArray = convertJSONtoArray(initialLikedPostsString, "id");
+    console.log(likedPostsArray);
+    setLikedPosts(likedPostsArray);
+  }, [initialLikedPosts]);
 
   useEffect(() => {
     if (filteredPostsLoading) {
@@ -97,11 +124,14 @@ const PostFeed = () => {
       </div>
 
       <div className="m-2 flex flex-wrap">
-        {data.map((post) => (
-          <div key={post.id} className="mx-1 p-2">
-            <PostObject {...post} key={post.id} />
-          </div>
-        ))}
+        {data.map((post) => {
+          const hello = "hello";
+          return (
+            <div key={post.id} className="mx-1 p-2">
+              <PostObject {...post} key={post.id} />
+            </div>
+          );
+        })}
       </div>
     </>
   );
