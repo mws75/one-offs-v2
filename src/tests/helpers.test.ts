@@ -3,6 +3,7 @@ import {
   checkIfValueExistsInJSONObject,
   checkLengthOfJSON,
   convertJSONtoArray,
+  combineJSONObjects,
 } from "../server/helpers/dataHelper";
 
 const sampleJSON = `[
@@ -45,4 +46,16 @@ test("should return array of integers", () => {
   const jsonString = '[{ "id": 0 }, { "id": 56 }, { "id": 20 }]';
   const myArray = convertJSONtoArray(jsonString, "id");
   expect(myArray).toEqual([0, 56, 20]);
+});
+
+test("should return combined json string", () => {
+  const jsonString = '[{ "id": 0 }, { "id": 56 }, { "id": 20 }]';
+  const newJsonObj = '[{"id": 4, "title": "post4"}]';
+
+  const finalJsonObj = combineJSONObjects(jsonString, newJsonObj);
+
+  console.log(finalJsonObj);
+  expect(finalJsonObj).toEqual(
+    '[{"id":0},{"id":56},{"id":20},{"id":4,"title":"post4"}]'
+  );
 });

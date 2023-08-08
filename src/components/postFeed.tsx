@@ -4,7 +4,10 @@ import PostObject from "~/components/postobject";
 import { useUser } from "@clerk/nextjs";
 import { LoadingPage } from "./loadingspinner";
 import { serialize } from "v8";
-import { convertJSONtoArray } from "../server/helpers/dataHelper";
+import {
+  convertJSONtoArray,
+  combineJSONObjects,
+} from "../server/helpers/dataHelper";
 import { init } from "next/dist/compiled/@vercel/og/satori";
 
 // Do something like this: https://react.dev/learn/updating-arrays-in-state
@@ -126,9 +129,16 @@ const PostFeed = () => {
       <div className="m-2 flex flex-wrap">
         {data.map((post) => {
           const liked = likedPosts.includes(post.id) ? 1 : 0;
+          const likedJSON = `{"liked":"+ ${liked} +"}`;
+
+          let postString = JSON.stringify(post);
+          console.log("post string: ", postString);
+          const postObject = combineJSONObjects(postString, likedJSON);
+          const postJSON = JSON.parse(postObject);
+          console.log("liked json: ", likedJSON);
           return (
             <div key={post.id} className="mx-1 p-2">
-              <PostObject {...post} key={post.id} />
+              <PostObject {...postJSON} key={post.id} />
             </div>
           );
         })}
