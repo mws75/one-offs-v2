@@ -13,12 +13,22 @@ import { IoThumbsUpOutline } from "react-icons/io5";
 import { api } from "../utils/api";
 import { useState } from "react";
 import { useUser } from "@clerk/nextjs";
+import { initScriptLoader } from "next/script";
 
 // [number] grabs a single element from the array so we can create a type of posts[0].
-type postedContent = RouterOutputs["posts"]["getAll"][number];
+type postedContent = {
+  id: number;
+  createdAt: Date;
+  updatedAt: Date;
+  user_name: string;
+  post: string;
+  title: string;
+  profile_image_url: string | null;
+  liked: number;
+};
 type likedFlag = number;
 
-export const PostObject = (props: postedContent, number: likedFlag) => {
+export const PostObject = (props: postedContent) => {
   const { id, title, profile_image_url } = props;
   const my_id = id.toString();
   const { user } = useUser();
@@ -30,12 +40,12 @@ export const PostObject = (props: postedContent, number: likedFlag) => {
     );
 
   const user_id = user?.id;
-
-  const [isLiked, setIsLiked] = useState(false);
+  const initialLike = props.liked;
+  const [isLiked, setIsLiked] = useState(initialLike);
 
   const { mutate, isLoading: isLiking } = api.likedPosts.create.useMutation({
     onSuccess: () => {
-      setIsLiked(true);
+      setIsLiked(1);
       alert("Post Liked!");
     },
     onError: (error) => {
@@ -78,11 +88,7 @@ export const PostObject = (props: postedContent, number: likedFlag) => {
             })
           }
         >
-          {isLiked === true ? (
-            <MdThumbUp size={20} />
-          ) : (
-            <LuThumbsUp size={20} />
-          )}
+          {isLiked === 1 ? <MdThumbUp size={20} /> : <LuThumbsUp size={20} />}
         </button>
       </div>
     </div>

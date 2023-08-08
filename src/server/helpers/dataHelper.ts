@@ -70,3 +70,39 @@ export const convertJSONtoArray = (jsonString: string, key: string): any[] => {
     }
   });
 };
+
+// export const combineJSONObjects = (json1: string, json2: string) => {
+//   const jsonObject1 = JSON.parse(json1);
+//   const jsonObject2 = JSON.parse(json2);
+
+//   const combinedJSON = [...jsonObject1, ...jsonObject2];
+
+//   const combinedJSONString = JSON.stringify(combinedJSON);
+
+//   return combinedJSONString;
+// };
+
+export const combineJSONObjects = (json1: string, json2: string) => {
+  let jsonObject1: any;
+  let jsonObject2: any;
+
+  try {
+    jsonObject1 = JSON.parse(json1.trim());
+    jsonObject2 = JSON.parse(json2.trim());
+  } catch (error) {
+    throw new Error("Invalid JSON string provided." + error);
+  }
+
+  if (
+    typeof jsonObject1 !== "object" ||
+    Array.isArray(jsonObject1) ||
+    typeof jsonObject2 !== "object" ||
+    Array.isArray(jsonObject2)
+  ) {
+    throw new Error("Input JSON strings must be objects (and not arrays).");
+  }
+
+  const combinedJSON = { ...jsonObject1, ...jsonObject2 };
+
+  return JSON.stringify(combinedJSON);
+};
