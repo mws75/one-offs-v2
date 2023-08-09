@@ -12,7 +12,7 @@ export const likedPostsRouter = createTRPCRouter({
   getAllIDs: privateProcedure.query(({ ctx }) => {
     return ctx.prisma.likePosts.findMany({
       select: {
-        id: true,
+        post_id: true,
       },
     });
   }),
@@ -45,13 +45,15 @@ export const likedPostsRouter = createTRPCRouter({
   delete: privateProcedure
     .input(
       z.object({
-        id: z.number(),
+        post_id: z.number(),
+        user_id: z.string(),
       })
     )
     .mutation(async ({ ctx, input }) => {
       const delete_likedPost = await ctx.prisma.likePosts.delete({
         where: {
-          id: input.id,
+          post_id: input.post_id,
+          user_id: input.user_id,
         },
       });
       return delete_likedPost;
