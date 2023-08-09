@@ -43,6 +43,23 @@ export const PostObject = (props: postedContent) => {
   const initialLike = props.liked;
   const [isLiked, setIsLiked] = useState(initialLike);
 
+  // const likedClicked = () => {
+  //   if (isLiked === 1) {
+  //     setIsLiked(0);
+  //     api.likedPosts.delete.mutate({
+  //       user_id: user_id,
+  //       post_id: props.id,
+  //     })
+  //   }
+  //   else{
+  //     setIsLiked(1);
+  //     api.likedPosts.create.mutate({
+  //         user_id: user_id,
+  //         post_id: props.id,
+  //     })
+  //   }
+  // }
+
   const { mutate, isLoading: isLiking } = api.likedPosts.create.useMutation({
     onSuccess: () => {
       setIsLiked(1);

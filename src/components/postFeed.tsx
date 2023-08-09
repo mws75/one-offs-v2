@@ -59,7 +59,11 @@ const PostFeed = () => {
       return;
     }
     const initialLikedPostsString = JSON.stringify(initialLikedPosts);
-    const likedPostsArray = convertJSONtoArray(initialLikedPostsString, "id");
+    console.log(initialLikedPostsString);
+    const likedPostsArray = convertJSONtoArray(
+      initialLikedPostsString,
+      "post_id"
+    );
     console.log(likedPostsArray);
     setLikedPosts(likedPostsArray);
   }, [initialLikedPosts]);
@@ -129,13 +133,12 @@ const PostFeed = () => {
       <div className="m-2 flex flex-wrap">
         {data.map((post) => {
           const liked = likedPosts.includes(post.id) ? 1 : 0;
-          const likedJSON = `{"liked":"+ ${liked} +"}`;
+          const likedJSON = `{"liked":${liked}}`;
 
           let postString = JSON.stringify(post);
-          console.log("post string: ", postString);
           const postObject = combineJSONObjects(postString, likedJSON);
           const postJSON = JSON.parse(postObject);
-          console.log("liked json: ", likedJSON);
+          console.log(postJSON);
           return (
             <div key={post.id} className="mx-1 p-2">
               <PostObject {...postJSON} key={post.id} />
