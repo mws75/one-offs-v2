@@ -59,7 +59,6 @@ const PostFeed = () => {
       return;
     }
     const initialLikedPostsString = JSON.stringify(initialLikedPosts);
-    console.log(initialLikedPostsString);
     const likedPostsArray = convertJSONtoArray(
       initialLikedPostsString,
       "post_id"
@@ -138,7 +137,7 @@ const PostFeed = () => {
           let postString = JSON.stringify(post);
           const postObject = combineJSONObjects(postString, likedJSON);
           const postJSON = JSON.parse(postObject);
-          console.log(postJSON);
+
           return (
             <div key={post.id} className="mx-1 p-2">
               <PostObject {...postJSON} key={post.id} />
