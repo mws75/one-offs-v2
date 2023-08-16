@@ -43,24 +43,7 @@ export const PostObject = (props: postedContent) => {
   const initialLike = props.liked;
   const [isLiked, setIsLiked] = useState(initialLike);
 
-  // const likedClicked = () => {
-  //   if (isLiked === 1) {
-  //     setIsLiked(0);
-  //     api.likedPosts.delete.mutate({
-  //       user_id: user_id,
-  //       post_id: props.id,
-  //     })
-  //   }
-  //   else{
-  //     setIsLiked(1);
-  //     api.likedPosts.create.mutate({
-  //         user_id: user_id,
-  //         post_id: props.id,
-  //     })
-  //   }
-  // }
-
-  const { mutate, isLoading: isLiking } = api.likedPosts.create.useMutation({
+  const createLikeMutation = api.likedPosts.create.useMutation({
     onSuccess: () => {
       setIsLiked(1);
       alert("Post Liked!");
@@ -74,6 +57,35 @@ export const PostObject = (props: postedContent) => {
       }
     },
   });
+
+  const deleteLikeMutation = api.likedPosts.delete.useMutation({
+    onSuccess: () => {
+      setIsLiked(0);
+      alert("Like Removed!");
+    },
+    onError: (error) => {
+      const errorMessage = error.data?.zodError?.fieldErrors.content;
+      if (errorMessage && errorMessage[0]) {
+        alert(errorMessage[0]);
+      } else {
+        alert("Something went wrong, failed to unlike." + String(error));
+      }
+    },
+  });
+
+  const likedClicked = (user_id: string, post_id: number) => {
+    if (isLiked === 1) {
+      deleteLikeMutation.mutate({
+        user_id: user_id,
+        post_id: post_id,
+      });
+    } else {
+      createLikeMutation.mutate({
+        user_id: user_id,
+        post_id: post_id,
+      });
+    }
+  };
 
   const pic_url = profile_image_url || default_profile_pic;
 
@@ -98,12 +110,7 @@ export const PostObject = (props: postedContent) => {
       <div className="absolute bottom-10 left-10">
         <button
           className="absolute right-0 top-0 flex flex-row p-2"
-          onClick={() =>
-            mutate({
-              user_id: user_id,
-              post_id: props.id,
-            })
-          }
+          onClick={() => likedClicked(user_id, props.id)}
         >
           {isLiked === 1 ? <MdThumbUp size={20} /> : <LuThumbsUp size={20} />}
         </button>
