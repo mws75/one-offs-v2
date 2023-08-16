@@ -7,9 +7,9 @@ const AboutPage = () => {
     bloggers have in common? They both believe they need to write the next
     great Epic before presenting the information you actually came for.
     Byte Size Tech is short and sweet blog posts that give you exactly
-    what you need and nothing more. No more reading about the history web
+    what you need and nothing more. No more reading about the history of web
     development when you are trying to learn how to use a React Hook. No
-    more scrolling down the page filled with of machine learning theories when you want to
+    more scrolling down a page filled with machine learning theories when you want to
     remember how to loop through a Pandas Data Frame. We believe you came
     here for one reason. To find a quick solution so that you can get back
     to building. Our mission is to waste our time
