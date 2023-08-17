@@ -51,7 +51,7 @@ const PostFeed = () => {
   }, [initialData]);
 
   useEffect(() => {
-    console.log(likedPosts);
+    console.log("getting liked posts");
     if (likedPostsLoading) {
       return;
     }
@@ -63,8 +63,8 @@ const PostFeed = () => {
       initialLikedPostsString,
       "post_id"
     );
-    console.log(likedPostsArray);
     setLikedPosts(likedPostsArray);
+    console.log(likedPostsArray);
   }, [initialLikedPosts]);
 
   useEffect(() => {
@@ -84,8 +84,6 @@ const PostFeed = () => {
           console.log(error);
           alert("something went wrong");
         }
-      } else {
-        console.log("user has already been added");
       }
     };
     if (!dataFeteched) {
@@ -137,7 +135,7 @@ const PostFeed = () => {
           let postString = JSON.stringify(post);
           const postObject = combineJSONObjects(postString, likedJSON);
           const postJSON = JSON.parse(postObject);
-
+          console.log(postJSON);
           return (
             <div key={post.id} className="mx-1 p-2">
               <PostObject {...postJSON} key={post.id} />

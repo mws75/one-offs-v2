@@ -11,7 +11,7 @@ import { LuThumbsUp } from "react-icons/lu";
 import { MdThumbUp } from "react-icons/md";
 import { IoThumbsUpOutline } from "react-icons/io5";
 import { api } from "../utils/api";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useUser } from "@clerk/nextjs";
 import { initScriptLoader } from "next/script";
 
@@ -40,8 +40,12 @@ export const PostObject = (props: postedContent) => {
     );
 
   const user_id = user?.id;
-  const initialLike = props.liked;
-  const [isLiked, setIsLiked] = useState(initialLike);
+
+  const [isLiked, setIsLiked] = useState(props.liked);
+
+  useEffect(() => {
+    setIsLiked(props.liked);
+  }, [props.liked]);
 
   const createLikeMutation = api.likedPosts.create.useMutation({
     onSuccess: () => {
