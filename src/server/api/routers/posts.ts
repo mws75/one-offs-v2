@@ -23,6 +23,17 @@ export const postsRouter = createTRPCRouter({
       return posts;
     }),
 
+  getAllLikedPosts: privateProcedure.query(async ({ ctx }) => {
+    return await ctx.prisma.likePosts.findMany({
+      where: {
+        user_id: ctx.userId,
+      },
+      include: {
+        post: true,
+      },
+    });
+  }),
+
   getById: publicProcedure
     .input(z.object({ id: z.number() }))
     .query(async ({ ctx, input }) => {
