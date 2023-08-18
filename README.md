@@ -42,6 +42,12 @@ Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/ver
 I am using a MySQL instance hosted on PlanetScale
 Prisma connects to the PlanetScale account
 
+Making changes to Database Command
+
+```
+$ npx prisma db push
+```
+
 ## Authentication
 
 Using Clerk

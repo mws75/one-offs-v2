@@ -4,6 +4,7 @@ import React from "react";
 import Image from "next/image";
 import default_profile_pic from "../../public/default_profile_pic.png";
 import { PageLayout } from "~/components/layouts";
+import LikedPostsSection from "~/components/likedPosts";
 import Link from "next/link";
 
 interface UserProps {
@@ -95,6 +96,7 @@ export const UserProfile = () => {
             id={user.id}
             email={String(user.emailAddresses)}
           />
+          <LikedPostsSection />
           <div className="m-4 flex w-11/12  items-center rounded-lg bg-slate-100 shadow-md">
             <ul>
               {!userPosts.data ? (

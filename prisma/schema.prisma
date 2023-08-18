@@ -19,7 +19,7 @@ model Posts {
   post   String    @db.VarChar(5000)
   title   String    @db.VarChar(255)
   profile_image_url String? @db.VarChar(255)
-
+  likePosts LikePosts[]
 }
 
 model Users {
@@ -43,4 +43,5 @@ model LikePosts {
   user_id String @db.VarChar(255)
   post_id Int 
   post_liked Int
+  post Posts @relation(fields: [post_id], references: [id])
 }

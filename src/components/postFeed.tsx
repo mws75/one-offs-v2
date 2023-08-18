@@ -51,7 +51,6 @@ const PostFeed = () => {
   }, [initialData]);
 
   useEffect(() => {
-    console.log("getting liked posts");
     if (likedPostsLoading) {
       return;
     }
@@ -64,7 +63,6 @@ const PostFeed = () => {
       "post_id"
     );
     setLikedPosts(likedPostsArray);
-    console.log(likedPostsArray);
   }, [initialLikedPosts]);
 
   useEffect(() => {
@@ -92,7 +90,6 @@ const PostFeed = () => {
   }, []);
 
   const onSearch = (event: React.FormEvent) => {
-    console.log("searching with filter...");
     event.preventDefault();
     setSearchTrigger(!searchTrigger);
     setData(data);
@@ -135,7 +132,7 @@ const PostFeed = () => {
           let postString = JSON.stringify(post);
           const postObject = combineJSONObjects(postString, likedJSON);
           const postJSON = JSON.parse(postObject);
-          console.log(postJSON);
+
           return (
             <div key={post.id} className="mx-1 p-2">
               <PostObject {...postJSON} key={post.id} />
