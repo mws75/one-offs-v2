@@ -36,15 +36,26 @@ const LikedPostsSection = () => {
           ) : (
             likedPosts.map((likedPost: LikedPost) => {
               return (
-                <li key={likedPost.id}>
-                  <div className="flex flex-col items-center">
-                    <Link href={`/post/${likedPost.post.id}`}>
-                      <p className="text-lg font-semibold">
-                        {likedPost.post.title}
-                      </p>
-                    </Link>
-                  </div>
-                </li>
+                <Link href={`/post/${likedPost.post.id}`}>
+                  <li
+                    key={likedPost.id}
+                    className="border-slate
+                  m-2
+                  ml-4
+                  flex
+                  w-96
+                  rounded-lg
+                  border-2
+                  border-solid
+                  bg-slate-100
+                  p-2
+                  hover:bg-slate-300"
+                  >
+                    <div className="flex flex-col items-center">
+                      <p>{likedPost.post.title}</p>
+                    </div>
+                  </li>
+                </Link>
               );
             })
           )}
