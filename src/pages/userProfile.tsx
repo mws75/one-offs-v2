@@ -97,7 +97,7 @@ export const UserProfile = () => {
             email={String(user.emailAddresses)}
           />
           <LikedPostsSection />
-          <div className="m-4 flex w-11/12  items-center rounded-lg bg-slate-100 shadow-md">
+          <div className="m-4 flex w-11/12 items-center rounded-lg  bg-slate-100 py-4 shadow-md">
             <ul>
               {!userPosts.data ? (
                 <li>no posts yet</li>
