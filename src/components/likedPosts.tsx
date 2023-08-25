@@ -23,7 +23,9 @@ const LikedPostsSection = () => {
     setLikedPosts(initialLikedPosts);
   }, [initialLikedPosts]);
 
-  console.log(likedPosts);
+  if (!likedPosts || likedPostsLoading) {
+    return <LoadingPage />;
+  }
 
   return (
     <>
@@ -47,7 +49,7 @@ const LikedPostsSection = () => {
 
         <div className="py-5">
           <ul>
-            {!likedPosts ? (
+            {likedPosts.length === 0 ? (
               <li>you haven't liked any posts yet!</li>
             ) : (
               likedPosts.map((likedPost: LikedPost) => {
