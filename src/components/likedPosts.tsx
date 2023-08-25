@@ -28,10 +28,21 @@ const LikedPostsSection = () => {
   return (
     <>
       <div className="m-4  w-11/12  items-center rounded-lg bg-slate-100 shadow-md">
-        <div className="p-5">
-          {/* <Image src={LikedHeart} alt="liked heart"></Image>
-           */}
-          <p>Liked Posts</p>
+        <div className="flex items-center px-5 pt-5">
+          <Image
+            src={LikedHeart}
+            alt="liked heart"
+            width={40}
+            height={40}
+          ></Image>
+
+          <h3 className="p-2">Liked Posts</h3>
+          <Image
+            src={LikedHeart}
+            alt="liked heart"
+            width={40}
+            height={40}
+          ></Image>
         </div>
 
         <div className="py-5">
@@ -40,24 +51,23 @@ const LikedPostsSection = () => {
               <li>you haven't liked any posts yet!</li>
             ) : (
               likedPosts.map((likedPost: LikedPost) => {
+                const pic_url =
+                  likedPost.post.profile_image_url || default_profile_pic;
                 return (
                   <Link href={`/post/${likedPost.post.id}`}>
                     <li
                       key={likedPost.id}
-                      className="border-slate
-                      m-2
-                      ml-4
-                      flex
-                      w-96
-                      rounded-lg
-                      border-2
-                      border-solid
-                      bg-slate-100
-                      p-2
-                      hover:bg-slate-300"
+                      className="border-slate m-2 ml-4 flex w-96 rounded-lg border-2 border-solid bg-slate-100 p-2 hover:bg-slate-300"
                     >
-                      <div className="flex flex-col items-center">
+                      <div className="flex w-96 items-center justify-between">
                         <p>{likedPost.post.title}</p>
+                        <Image
+                          src={pic_url}
+                          alt="profile image"
+                          width={30}
+                          height={30}
+                          className="border-1 rounded-full border-solid border-slate-600"
+                        ></Image>
                       </div>
                     </li>
                   </Link>
