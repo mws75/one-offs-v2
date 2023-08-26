@@ -50,7 +50,7 @@ const LikedPostsSection = () => {
         <div className="py-5">
           <ul>
             {likedPosts.length === 0 ? (
-              <li>you haven't liked any posts yet!</li>
+              <li className="m-5">you haven't liked any posts yet!</li>
             ) : (
               likedPosts.map((likedPost: LikedPost) => {
                 const pic_url =
