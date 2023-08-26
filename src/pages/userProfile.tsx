@@ -6,6 +6,7 @@ import default_profile_pic from "../../public/default_profile_pic.png";
 import { PageLayout } from "~/components/layouts";
 import LikedPostsSection from "~/components/likedPosts";
 import Link from "next/link";
+import { LoadingPage } from "~/components/loadingspinner";
 
 interface UserProps {
   id: string;
@@ -60,7 +61,11 @@ const AlertWindow = () => {
 };
 
 export const UserProfile = () => {
-  const { user } = useUser()!;
+  const { user, isLoaded: userLoaded } = useUser()!;
+
+  if (!userLoaded) {
+    return <LoadingPage />;
+  }
 
   if (!user)
     return (
