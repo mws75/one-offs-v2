@@ -7,6 +7,7 @@ import { type NextPage } from "next";
 import { PageLayout } from "~/components/layouts";
 import { useRouter } from "next/router";
 import { IdentificationLink } from "@clerk/nextjs/dist/api";
+import { LoadingPage } from "~/components/loadingspinner";
 
 const usePostInfo = (post_id: number) => {
   const { data, isError, isLoading, error } = api.posts.getById.useQuery({
@@ -22,7 +23,12 @@ export const EditPost = () => {
   const router = useRouter();
   const { id } = router.query;
   let num_id = Number(id);
-  const { user } = useUser();
+  const { user, isLoaded: userLoaded } = useUser();
+
+  if (!userLoaded) {
+    return <LoadingPage />;
+  }
+
   if (!user) {
     return (
       <div>
