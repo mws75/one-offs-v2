@@ -77,13 +77,20 @@ export const NewPost = () => {
         </div>
         <div className="flex">
           <button
-            onClick={() =>
-              mutate({
-                title: post_title,
-                content: markdown,
-                profile_image_url: user?.profileImageUrl || "none",
-              })
-            }
+            onClick={() => {
+              if (
+                user.primaryEmailAddress?.emailAddress ===
+                "mwspencer75@gmail.com"
+              ) {
+                mutate({
+                  title: post_title,
+                  content: markdown,
+                  profile_image_url: user?.profileImageUrl || "none",
+                });
+              } else {
+                alert("You are not authorized to submit posts."); // You can replace this with a more subtle notification if preferred
+              }
+            }}
             className="my-5 ml-5 rounded bg-blue-500 p-4 px-4 py-2 font-bold text-white hover:bg-blue-700"
           >
             Submit
