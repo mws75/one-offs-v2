@@ -58,7 +58,7 @@ Using Vercel
 
 ## Search Engine
 
-Using Elasticsearch
+Using Elasticsearch - not implemented yet. 
 
 ## Unit testing
 
