@@ -119,3 +119,30 @@ const enforceUserIsAuthed = t.middleware(async ({ ctx, next }) => {
 });
 
 export const privateProcedure = t.procedure.use(enforceUserIsAuthed);
+
+const enforceUserIsAdmin = t.middleware(async ({ ctx, next }) => {
+  if (!ctx.userId) {
+    throw new TRPCError({
+      code: "UNAUTHORIZED",
+      message: "You must be logged in",
+    });
+  }
+
+  // Import env to access ADMINUSER_EMAIL
+  const { env } = await import("~/env.mjs");
+
+  if (ctx.userId !== env.ADMINUSER_EMAIL) {
+    throw new TRPCError({
+      code: "FORBIDDEN",
+      message: "Only admin users can perform this action",
+    });
+  }
+
+  return next({
+    ctx: {
+      userId: ctx.userId,
+    },
+  });
+});
+
+export const adminProcedure = t.procedure.use(enforceUserIsAdmin);

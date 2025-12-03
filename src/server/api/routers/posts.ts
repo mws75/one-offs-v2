@@ -6,6 +6,7 @@ import {
   createTRPCRouter,
   privateProcedure,
   publicProcedure,
+  adminProcedure,
 } from "~/server/api/trpc";
 
 export const postsRouter = createTRPCRouter({
@@ -54,7 +55,7 @@ export const postsRouter = createTRPCRouter({
       return posts;
     }),
 
-  create: privateProcedure
+  create: adminProcedure
     .input(
       z.object({
         title: z.string(),
@@ -63,11 +64,9 @@ export const postsRouter = createTRPCRouter({
       })
     )
     .mutation(async ({ ctx, input }) => {
-      const authorId = ctx.userId;
-      if (!authorId) throw new TRPCError({ code: "UNAUTHORIZED" });
       const new_post = await ctx.prisma.posts.create({
         data: {
-          user_name: authorId,
+          user_name: ctx.userId,
           title: input.title,
           post: input.content,
           profile_image_url: input.profile_image_url,
@@ -76,11 +75,9 @@ export const postsRouter = createTRPCRouter({
       return new_post;
     }),
 
-  delete: privateProcedure
+  delete: adminProcedure
     .input(z.object({ id: z.number() }))
     .mutation(async ({ ctx, input }) => {
-      const authorId = ctx.userId;
-      if (!authorId) throw new TRPCError({ code: "UNAUTHORIZED" });
       const deletePost = await ctx.prisma.posts.delete({
         where: {
           id: input.id,
@@ -89,7 +86,7 @@ export const postsRouter = createTRPCRouter({
       return deletePost;
     }),
 
-  update: privateProcedure
+  update: adminProcedure
     .input(z.object({ id: z.number(), title: z.string(), content: z.string() }))
     .mutation(async ({ ctx, input }) => {
       const updatePost = await ctx.prisma.posts.update({
