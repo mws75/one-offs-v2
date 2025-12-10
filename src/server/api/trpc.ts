@@ -42,12 +42,24 @@ const createInnerTRPCContext = (_opts: CreateContextOptions) => {
  *
  * @see https://trpc.io/docs/context
  */
-export const createTRPCContext = (opts: CreateNextContextOptions) => {
-  const { req } = opts;
-  const sesh = getAuth(req);
 
-  const userId = sesh.userId;
-  const profile_image_url = sesh.user?.profileImageUrl;
+export const createTRPCContext = (opts: CreateNextContextOptions) => {
+  const { req, res } = opts;
+
+  // For API routes, we need to get auth differently
+  // getAuth requires withClerkMiddleware, which breaks API routes
+  // So we'll get userId from the request headers if available
+  let userId: string | null = null;
+  let profile_image_url: string | undefined = undefined;
+
+  try {
+    const sesh = getAuth(req);
+    userId = sesh.userId;
+    profile_image_url = sesh.user?.profileImageUrl;
+  } catch (error) {
+    // If getAuth fails, userId stays null (unauthenticated)
+    console.log("No auth context available, user is not authenticated");
+  }
 
   return {
     prisma,

@@ -1,47 +1,110 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-datasource db {
-  provider = "mysql"
-  url      = env("DATABASE_URL")
-  relationMode = "prisma"
-}
-
 generator client {
   provider = "prisma-client-js"
 }
 
+datasource db {
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
+  relationMode = "prisma"
+}
+
 model Posts {
-  id              Int       @default(autoincrement()) @id
-  createdAt       DateTime  @default(now())
-  updatedAt       DateTime  @updatedAt
-  user_name       String    @db.VarChar(255)
-  post   String    @db.VarChar(5000)
-  title   String    @db.VarChar(255)
-  profile_image_url String? @db.VarChar(255)
-  likePosts LikePosts[]
+  id                Int         @id @default(autoincrement())
+  createdAt         DateTime    @default(now())
+  updatedAt         DateTime    @updatedAt
+  user_name         String      @db.VarChar(255)
+  post              String      @db.VarChar(5000)
+  title             String      @db.VarChar(255)
+  profile_image_url String?     @db.VarChar(255)
+  likePosts         LikePosts[]
 }
 
 model Users {
-  id Int @default(autoincrement()) @id
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  user_id String @unique @db.VarChar(255)
-  recent_posts_json String? @db.VarChar(5000)
-  liked_posts String? @db.VarChar(255)
-  profile_image_url String? @db.VarChar(255)
+  id                Int      @id @default(autoincrement())
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  recent_posts_json String?  @db.VarChar(5000)
+  liked_posts       String?  @db.VarChar(255)
+  profile_image_url String?  @db.VarChar(255)
+  user_id           String   @unique @db.VarChar(255)
 }
 
 model SearchQuery {
-  id String @id @default(cuid())
+  id    String @id @default(cuid())
   query String
 }
 
 model LikePosts {
-  id Int @default(autoincrement()) @id
-  createdAt DateTime @default(now())
-  user_id String @db.VarChar(255)
-  post_id Int 
+  id         Int      @id @default(autoincrement())
+  createdAt  DateTime @default(now())
+  user_id    String   @db.VarChar(255)
+  post_id    Int
   post_liked Int
-  post Posts @relation(fields: [post_id], references: [id])
+  post       Posts    @relation(fields: [post_id], references: [id])
+}
+
+model ltc_categories {
+  category_id   BigInt   @id @default(autoincrement()) @db.UnsignedBigInt
+  user_id       BigInt   @db.UnsignedBigInt
+  category_name String   @db.VarChar(50)
+  color_hex     String?  @db.VarChar(20)
+  created_on    DateTime @default(now()) @db.DateTime(0)
+  modified_on   DateTime @default(now()) @db.DateTime(0)
+
+  @@unique([user_id, category_name], map: "ux_categories_user_name")
+  @@index([user_id], map: "ix_categories_user")
+}
+
+model ltc_emojis {
+  emoji_id    BigInt   @id @default(autoincrement()) @db.UnsignedBigInt
+  emoji       String   @db.VarChar(255)
+  created_on  DateTime @default(now()) @db.DateTime(0)
+  modified_on DateTime @default(now()) @db.DateTime(0)
+}
+
+model ltc_macros_cache {
+  hash_id               String   @id @db.VarChar(255)
+  source_recipe_id      BigInt?  @db.UnsignedBigInt
+  per_serving_calories  Decimal  @db.Decimal(10, 3)
+  per_serving_protein_g Decimal  @db.Decimal(10, 3)
+  per_serving_fat_g     Decimal  @db.Decimal(10, 3)
+  per_serving_carbs_g   Decimal  @db.Decimal(10, 3)
+  per_serving_sugar_g   Decimal  @db.Decimal(10, 3)
+  num_servings_used     Decimal  @default(1.00) @db.Decimal(5, 2)
+  created_on            DateTime @default(now()) @db.DateTime(0)
+  modified_on           DateTime @default(now()) @db.DateTime(0)
+  expires_on            DateTime @db.Date
+
+  @@index([expires_on], map: "ix_macros_cache_expires")
+  @@index([source_recipe_id], map: "ix_macros_cache_recipe")
+}
+
+model ltc_recipes {
+  recipe_id         BigInt   @id @default(autoincrement()) @db.UnsignedBigInt
+  user_id           BigInt   @db.UnsignedBigInt
+  category_id       BigInt?  @db.UnsignedBigInt
+  name              String   @db.VarChar(255)
+  num_servings      Decimal  @default(1.00) @db.Decimal(5, 2)
+  ingredients_json  Json
+  instructions_json Json
+  emoji_id          BigInt?  @db.UnsignedBigInt
+  is_public         Boolean  @default(false)
+  created_on        DateTime @default(now()) @db.DateTime(0)
+  modified_on       DateTime @default(now()) @db.DateTime(0)
+
+  @@index([category_id], map: "ix_recipes_category")
+  @@index([emoji_id], map: "ix_recipes_emoji")
+  @@index([is_public], map: "ix_recipes_public")
+  @@index([user_id], map: "ix_recipes_user")
+}
+
+model ltc_users {
+  user_id         BigInt   @id @default(autoincrement()) @db.UnsignedBigInt
+  user_name       String   @db.VarChar(255)
+  email           String   @unique(map: "ux_users_email") @db.VarChar(255)
+  profile_pic_url String?  @db.VarChar(255)
+  plan_tier       String   @default("free") @db.VarChar(25)
+  is_deleted      Boolean  @default(false)
+  created_on      DateTime @default(now()) @db.DateTime(0)
+  modified_on     DateTime @default(now()) @db.DateTime(0)
 }

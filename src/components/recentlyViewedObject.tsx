@@ -38,15 +38,20 @@ export const RecentlyViewedObject = () => {
 
   const profile_image_url = user?.profileImageUrl;
   const user_profile = useUserProfile(user.id);
-
   //   console.log(recently_viewed_json);
   if (user_profile.isLoading) {
     return <LoadingPage />;
   }
+  console.log("============ User Profile Debug =============");
+  console.log("user.id: ", user.id);
+  console.log("user_profile.isLoading: ", user_profile.isLoading);
+  console.log("user_profile.isError: ", user_profile.isError);
+  console.log("user_profile.error: ", user_profile.error);
+  console.log("user_profile.data: ", user_profile.data);
 
-  const recentPostsJson = JSON.parse(
-    String(user_profile.data?.recent_posts_json)
-  );
+  const recentPostsJson = user_profile.data?.recent_posts_json
+    ? JSON.parse(String(user_profile.data.recent_posts_json))
+    : [];
 
   return (
     <>

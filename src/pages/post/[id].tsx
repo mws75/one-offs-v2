@@ -66,7 +66,7 @@ const SinglePagePost = () => {
         try {
           const new_recent_posts_json = udpatedRecentlyViewedJson(
             recent_posts_json,
-            newPost
+            newPost,
           );
           console.log(new_recent_posts_json);
           mutate({ content: String(new_recent_posts_json) });
@@ -95,6 +95,11 @@ const SinglePagePost = () => {
               <h1>
                 <ReactMarkdown className="prose">{`#  ${post_data.data.title}`}</ReactMarkdown>
               </h1>
+            </div>
+            <div>
+              <button className="mt-5 rounded bg-purple-500 p-4 px-4 py-2 font-bold text-white hover:bg-purple-700">
+                Export PDF
+              </button>
             </div>
             <div className="m-2 mt-5">
               <ReactMarkdown

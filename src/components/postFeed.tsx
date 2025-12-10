@@ -60,7 +60,7 @@ const PostFeed = () => {
     const initialLikedPostsString = JSON.stringify(initialLikedPosts);
     const likedPostsArray = convertJSONtoArray(
       initialLikedPostsString,
-      "post_id"
+      "post_id",
     );
     setLikedPosts(likedPostsArray);
   }, [initialLikedPosts]);
@@ -72,22 +72,35 @@ const PostFeed = () => {
     setData(filteredData);
   }, [searchTrigger]);
 
+  // Checking that User Exists
+  // or Creating new User
   useEffect(() => {
-    const fetchData = async () => {
-      if (user_profile.data === undefined) {
-        try {
-          await mutate({ profile_image_url });
-          setDataFetched(true);
-        } catch (error) {
-          console.log(error);
-          alert("something went wrong");
-        }
-      }
-    };
-    if (!dataFeteched) {
-      fetchData();
+    // only proceed if the user profile query has finished
+    if (user_profile.isLoading) {
+      return;
     }
-  }, []);
+
+    // if the user doesn't exist in db and we haven't tried creating yet
+    if (user_profile.data === null && !dataFeteched) {
+      console.log("user not found in db, creating new user...");
+      mutate(
+        { profile_image_url },
+        {
+          onSuccess: () => {
+            console.log("Successfully creating new user profile");
+            setDataFetched(true);
+          },
+          onError: (error) => {
+            console.log("Failed to create user profile:", error);
+            setDataFetched(true);
+          },
+        },
+      );
+    } else if (user_profile.data) {
+      // User exists in DB:
+      setDataFetched(true);
+    }
+  }, [user_profile.isLoading, user_profile.data, dataFeteched]);
 
   const onSearch = (event: React.FormEvent) => {
     event.preventDefault();
