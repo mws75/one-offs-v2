@@ -3,8 +3,8 @@
 ## 0. Minor Quality of Life Updates
 
 [] 1. Update Login Button to Say SignIn/SignUp or make it clear how to sign Up.
-[] 2. Only see the create post button if user is ADMIN
-[] 3. Get app to deploy on Vercel Successfully
+[x] 2. Only see the create post button if user is ADMIN
+[x] 3. Get app to deploy on Vercel Successfully
 
 ## 1. Update Package Json to Prevent Upgrades []
 

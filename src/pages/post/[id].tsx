@@ -1,9 +1,10 @@
+import { useUser } from "@clerk/nextjs";
+import { RedirectToSignIn } from "@clerk/nextjs";
 import { useRouter } from "next/router";
 import ReactMarkdown from "react-markdown";
 import { api } from "~/utils/api";
 import Link from "next/link";
 import { udpatedRecentlyViewedJson } from "../../server/helpers/dataHelper";
-import { useUser } from "@clerk/nextjs";
 import { useEffect } from "react";
 import { PageLayout } from "~/components/layouts";
 import { LoadingSpinner } from "~/components/loadingspinner";
@@ -37,13 +38,8 @@ const SinglePagePost = () => {
   const router = useRouter();
   const { id } = router.query;
   let num_id = Number(id);
-  const { user } = useUser();
-  if (!user)
-    return (
-      <div>
-        <p>401 Please Login</p>
-      </div>
-    );
+  const { user, isSignedIn } = useUser();
+  if (!isSignedIn) return <RedirectToSignIn redirectUrl={router.asPath} />;
 
   const post_data = usePostInfo(num_id);
   const user_profile = useUserProfile(user.id);

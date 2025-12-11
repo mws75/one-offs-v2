@@ -58,4 +58,16 @@ export const profileRouter = createTRPCRouter({
       });
       return user_profile;
     }),
+
+  getCurrentUser: privateProcedure.query(async ({ ctx }) => {
+    const user = await ctx.prisma.users.findUnique({
+      where: { user_id: ctx.userId },
+      select: {
+        is_admin: true,
+        user_id: true,
+        profile_image_url: true,
+      },
+    });
+    return user;
+  }),
 });
