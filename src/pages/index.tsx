@@ -1,5 +1,10 @@
 import { SignIn } from "@clerk/nextjs";
-import { SignInButton, SignOutButton, useUser } from "@clerk/nextjs";
+import {
+  SignInButton,
+  SignUpButton,
+  SignOutButton,
+  useUser,
+} from "@clerk/nextjs";
 import { LoadingPage } from "~/components/loadingspinner";
 
 import { type NextPage } from "next";
@@ -41,9 +46,18 @@ const Home: NextPage = () => {
                   <Image className=" max-w-xl" src={logo} alt="Logo" />
                 </div>
                 <div className="flex flex-col items-center justify-center">
-                  <div className="justify-center rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700">
-                    <SignInButton />
+                  <div className="flex justify-center items-center rounded bg-pink-500 px-4 py-2 font-bold text-white hover:bg-pink-700 mb-4 h-12 w-24">
+                    <SignUpButton>
+                      <button>Sign Up</button>
+                    </SignUpButton>
                   </div>
+
+                  <div className="flex justify-center items-center rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700 mb-4 h-12 w-24">
+                    <SignInButton>
+                      <button>Sign In</button>
+                    </SignInButton>
+                  </div>
+
                   <Link href="/about">
                     <button className="m-5 rounded bg-blue-500 p-4 px-4 py-2 font-bold text-white hover:bg-blue-700">
                       About
@@ -63,7 +77,7 @@ const Home: NextPage = () => {
               <div className="flex">
                 <Link href={`/newPost`}>
                   <button className="m-5 rounded bg-purple-500 p-4 px-4 py-2 font-bold text-white hover:bg-purple-700">
-                    Createt New Post
+                    Create New Post
                   </button>
                 </Link>
 
