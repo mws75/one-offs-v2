@@ -6,7 +6,7 @@ import {
   useUser,
 } from "@clerk/nextjs";
 import { LoadingPage } from "~/components/loadingspinner";
-
+import { api } from "../utils/api";
 import { type NextPage } from "next";
 import Head from "next/head";
 import { PageLayout } from "~/components/layouts";
@@ -28,7 +28,10 @@ const Home: NextPage = () => {
   if (!userLoaded) {
     return <LoadingPage />;
   }
-
+  const { data: currentUser } = api.profile.getCurrentUser.useQuery();
+  console.log("Current User... ");
+  console.log(currentUser);
+  const isAdmin = currentUser?.is_admin ?? false;
   return (
     <>
       <Head>
@@ -73,14 +76,14 @@ const Home: NextPage = () => {
                 <RecentlyViewedObject />
                 <PostFeed />
               </div>
-
-              <div className="flex">
-                <Link href={`/newPost`}>
-                  <button className="m-5 rounded bg-purple-500 p-4 px-4 py-2 font-bold text-white hover:bg-purple-700">
-                    Create New Post
-                  </button>
-                </Link>
-
+              <div className="flex mx-5">
+                {isAdmin && (
+                  <Link href={`/newPost`}>
+                    <button className="my-5 mr-5 rounded bg-purple-500 p-4 px-4 py-2 font-bold text-white hover:bg-purple-700">
+                      Create New Post
+                    </button>
+                  </Link>
+                )}
                 <div className="my-5 w-32 rounded bg-pink-400 p-4  py-2 font-bold text-white hover:bg-pink-700">
                   <SignOutButton />
                 </div>
