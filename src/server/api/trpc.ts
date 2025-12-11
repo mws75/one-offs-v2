@@ -140,10 +140,12 @@ const enforceUserIsAdmin = t.middleware(async ({ ctx, next }) => {
     });
   }
 
-  // Import env to access ADMINUSER_EMAIL
-  const { env } = await import("~/env.mjs");
-
-  if (ctx.userId !== env.ADMINUSER_EMAIL) {
+  // Check if user is admin in db
+  const user = await ctx.prisma.users.findUnique({
+    where: { user_id: ctx.userId },
+    select: { is_admin: true },
+  });
+  if (!user?.is_admin) {
     throw new TRPCError({
       code: "FORBIDDEN",
       message: "Only admin users can perform this action",

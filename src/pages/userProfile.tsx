@@ -75,7 +75,8 @@ export const UserProfile = () => {
     );
 
   const userPosts = useUserPosts(user.id);
-
+  const { data: currentUser } = api.profile.getCurrentUser.useQuery();
+  const isAdmin = currentUser?.is_admin ?? false;
   const { mutate, isLoading: isDeleting } = api.posts.delete.useMutation({
     onSuccess: () => {
       alert("Post deleted!");
@@ -102,54 +103,57 @@ export const UserProfile = () => {
             email={String(user.emailAddresses)}
           />
           <LikedPostsSection />
-          <div className="m-4 flex w-11/12 items-center rounded-lg  bg-slate-100 py-4 shadow-md">
-            <ul>
-              {!userPosts.data ? (
-                <li>no posts yet</li>
-              ) : (
-                userPosts.data.map((item: UserPost) => (
-                  <div className="flex">
-                    <Link href={`/post/${item.id}`}>
-                      <li
-                        key={item.id}
-                        className="border-slate m-2 ml-4 flex w-96 rounded-lg border-2 border-solid bg-slate-100 p-2 hover:bg-slate-300"
-                      >
-                        <span className="flex-grow self-center">
-                          {item.title}
-                        </span>
-                      </li>
-                    </Link>
+          {isAdmin && (
+            <div>
+              <div className="m-4 flex w-11/12 items-center rounded-lg  bg-slate-100 py-4 shadow-md">
+                <ul>
+                  {!userPosts.data ? (
+                    <li>no posts yet</li>
+                  ) : (
+                    userPosts.data.map((item: UserPost) => (
+                      <div className="flex">
+                        <Link href={`/post/${item.id}`}>
+                          <li
+                            key={item.id}
+                            className="border-slate m-2 ml-4 flex w-96 rounded-lg border-2 border-solid bg-slate-100 p-2 hover:bg-slate-300"
+                          >
+                            <span className="flex-grow self-center">
+                              {item.title}
+                            </span>
+                          </li>
+                        </Link>
 
-                    <button
-                      className="m-2 justify-items-end rounded-lg bg-purple-500 p-4 px-4 py-2 font-bold text-white hover:bg-purple-700"
-                      onClick={() =>
-                        mutate({
-                          id: item.id,
-                        })
-                      }
-                    >
-                      delete
-                    </button>
+                        <button
+                          className="m-2 justify-items-end rounded-lg bg-purple-500 p-4 px-4 py-2 font-bold text-white hover:bg-purple-700"
+                          onClick={() =>
+                            mutate({
+                              id: item.id,
+                            })
+                          }
+                        >
+                          delete
+                        </button>
 
-                    <Link
-                      className="m-2 justify-items-end rounded-lg bg-purple-500 p-4 px-4 py-2 font-bold text-white hover:bg-purple-700"
-                      href={`/editPost/${item.id}`}
-                    >
-                      <button className="flex h-full items-center justify-center">
-                        <span className=" align-middle">edit</span>
-                      </button>
-                    </Link>
-                  </div>
-                ))
-              )}
-            </ul>
-          </div>
-          <Link href={`/newPost`}>
-            <button className="ml-4 rounded bg-purple-500 p-4 px-4 py-2 font-bold text-white hover:bg-purple-700">
-              Createt New Post
-            </button>
-          </Link>
-
+                        <Link
+                          className="m-2 justify-items-end rounded-lg bg-purple-500 p-4 px-4 py-2 font-bold text-white hover:bg-purple-700"
+                          href={`/editPost/${item.id}`}
+                        >
+                          <button className="flex h-full items-center justify-center">
+                            <span className=" align-middle">edit</span>
+                          </button>
+                        </Link>
+                      </div>
+                    ))
+                  )}
+                </ul>
+              </div>
+              <Link href={`/newPost`}>
+                <button className="ml-4 rounded bg-purple-500 p-4 px-4 py-2 font-bold text-white hover:bg-purple-700">
+                  Createt New Post
+                </button>
+              </Link>
+            </div>
+          )}
           <Link href="/">
             <button className="m-4 mt-5 rounded bg-purple-500 p-4 px-4 py-2 font-bold text-white hover:bg-purple-700">
               home
