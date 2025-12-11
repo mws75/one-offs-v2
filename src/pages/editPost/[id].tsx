@@ -6,7 +6,6 @@ import { api } from "../../utils/api";
 import { type NextPage } from "next";
 import { PageLayout } from "~/components/layouts";
 import { useRouter } from "next/router";
-import { IdentificationLink } from "@clerk/nextjs/dist/api";
 import { LoadingPage } from "~/components/loadingspinner";
 
 const usePostInfo = (post_id: number) => {
