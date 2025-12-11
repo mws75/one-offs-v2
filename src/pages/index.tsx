@@ -28,7 +28,9 @@ const Home: NextPage = () => {
   if (!userLoaded) {
     return <LoadingPage />;
   }
-  const { data: currentUser } = api.profile.getCurrentUser.useQuery();
+  const { data: currentUser } = api.profile.getCurrentUser.useQuery(undefined, {
+    enabled: isSignedIn,
+  });
   console.log("Current User... ");
   console.log(currentUser);
   const isAdmin = currentUser?.is_admin ?? false;
