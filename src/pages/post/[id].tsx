@@ -3,6 +3,7 @@ import { RedirectToSignIn } from "@clerk/nextjs";
 import { useRouter } from "next/router";
 import ReactMarkdown from "react-markdown";
 import { api } from "~/utils/api";
+import { exportToPDF } from "~/utils/exportPDF";
 import Link from "next/link";
 import { udpatedRecentlyViewedJson } from "../../server/helpers/dataHelper";
 import { useEffect } from "react";
@@ -80,6 +81,27 @@ const SinglePagePost = () => {
       </div>
     );
   }
+  // ------------------------------
+  // Buttons
+  // -----------------------------
+  const handleExportPDF = async () => {
+    console.log("going to export Markdown as PDF");
+    // Get Post Contents
+    if (!post_data.data) {
+      console.log("no data to export");
+      return;
+    }
+    // Get Utility
+    const fileName = post_data.data.title
+      .replace(/[^a-z0-9]/gi, "_")
+      .toLowerCase();
+    const result = await exportToPDF("post-content", fileName);
+    if (result.success) {
+      alert("PDF exported successfully");
+    } else {
+      alert("Failed to export PDF, please try again");
+    }
+  };
 
   if (!post_data.data) return <div>{`404 and id: ${id}`}</div>;
   return (
@@ -87,67 +109,81 @@ const SinglePagePost = () => {
       <div className="h-screen bg-gradient-to-r from-purple-300 to-pink-200">
         <PageLayout>
           <div className="rounded-lg bg-white p-4 drop-shadow-lg">
-            <div className="m-2">
-              <h1>
-                <ReactMarkdown className="prose">{`#  ${post_data.data.title}`}</ReactMarkdown>
-              </h1>
-            </div>
-            <div>
-              <button className="mt-5 rounded bg-purple-500 p-4 px-4 py-2 font-bold text-white hover:bg-purple-700">
+            <div className="flex justify-end">
+              <button
+                className="mt-5 rounded bg-purple-500 p-4 px-4 py-2 font-bold text-white hover:bg-purple-700"
+                onClick={handleExportPDF}
+              >
                 Export PDF
               </button>
             </div>
-            <div className="m-2 mt-5">
-              <ReactMarkdown
-                className="prose-md prose 
+
+            {/* Content to export to PDF */}
+            <div id="post-content">
+              <div className="m-2">
+                <h1>
+                  <ReactMarkdown className="prose">{`#  ${post_data.data.title}`}</ReactMarkdown>
+                </h1>
+              </div>
+              <div className="m-2 mt-5">
+                <ReactMarkdown
+                  className="prose-md prose 
                            w-full max-w-none
                            prose-p:w-11/12 
                            prose-code:text-base
                            prose-pre:w-full 
                            prose-pre:bg-codeGrey 
                            prose-li:w-11/12"
-                children={post_data.data.post}
-                components={{
-                  code({ node, inline, className, children, style, ...props }) {
-                    const match = /language-(\w+)/.exec(className || "");
-                    return !inline && match ? (
-                      <div className="relative">
-                        <button className="absolute right-0 top-0 flex flex-row p-2">
-                          <span>
-                            <CopyToClipboard
-                              text={String(children).replace(/\n$/, "")}
-                              onCopy={() => notify()}
+                  children={post_data.data.post}
+                  components={{
+                    code({
+                      node,
+                      inline,
+                      className,
+                      children,
+                      style,
+                      ...props
+                    }) {
+                      const match = /language-(\w+)/.exec(className || "");
+                      return !inline && match ? (
+                        <div className="relative">
+                          <button className="absolute right-0 top-0 flex flex-row p-2">
+                            <span>
+                              <CopyToClipboard
+                                text={String(children).replace(/\n$/, "")}
+                                onCopy={() => notify()}
+                              >
+                                <IoIosCopy className="m-1 basis-1/4 text-lg hover:text-white" />
+                              </CopyToClipboard>
+                            </span>
+                          </button>
+
+                          <div>
+                            <SyntaxHighlighter
+                              language={match[1]}
+                              style={oneDark}
+                              {...props}
                             >
-                              <IoIosCopy className="m-1 basis-1/4 text-lg hover:text-white" />
-                            </CopyToClipboard>
-                          </span>
-                        </button>
-
-                        <div>
-                          <SyntaxHighlighter
-                            language={match[1]}
-                            style={oneDark}
-                            {...props}
-                          >
-                            {String(children).replace(/\n$/, "")}
-                          </SyntaxHighlighter>
+                              {String(children).replace(/\n$/, "")}
+                            </SyntaxHighlighter>
+                          </div>
                         </div>
-                      </div>
-                    ) : (
-                      <code className={className} {...props}>
-                        {children}
-                      </code>
-                    );
-                  },
-                }}
-              />
-
-              <Link href="/">
-                <button className="mt-5 rounded bg-purple-500 p-4 px-4 py-2 font-bold text-white hover:bg-purple-700">
-                  home
-                </button>
-              </Link>
+                      ) : (
+                        <code className={className} {...props}>
+                          {children}
+                        </code>
+                      );
+                    },
+                  }}
+                />
+              </div>
             </div>
+
+            <Link href="/">
+              <button className="mt-5 ml-4 rounded bg-purple-500 p-4 px-4 py-2 font-bold text-white hover:bg-purple-700">
+                home
+              </button>
+            </Link>
           </div>
         </PageLayout>
       </div>

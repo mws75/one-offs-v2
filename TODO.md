@@ -1,12 +1,12 @@
 # TODO
 
-## 0. Minor Quality of Life Updates
+## 0. Minor Quality of Life Updates [x]
 
-[] 1. Update Login Button to Say SignIn/SignUp or make it clear how to sign Up.
+[x] 1. Update Login Button to Say SignIn/SignUp or make it clear how to sign Up.
 [x] 2. Only see the create post button if user is ADMIN
 [x] 3. Get app to deploy on Vercel Successfully
 
-## 1. Update Package Json to Prevent Upgrades []
+## 1. Update Package Json to Prevent Upgrades [x]
 
 ```json
 {
@@ -16,6 +16,14 @@
   }
 }
 ```
+
+## Export As PDF Functionality []
+
+Test and deploy a feature that allows the user to export the markdown section as a PDF.
+
+1. Create a PDF Utility to Export the Post content as a PDF []
+2. Add Export Button to the Post Page : Pink! []
+3. Test and Refine [] 
 
 ## 2. Document Environment SetUp []
 
