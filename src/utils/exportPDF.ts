@@ -29,7 +29,6 @@ export const exportToPDF = async (elementId: string, fileName: string) => {
     const contentHeight = pageHeight - margin * 2;
 
     const imgHeight = (canvas.height * imgWidth) / canvas.width;
-    let heightLeft = imgHeight;
 
     // Convert Canvas to image
     const imgData = canvas.toDataURL("image/png");
@@ -38,17 +37,17 @@ export const exportToPDF = async (elementId: string, fileName: string) => {
     const pdf = new jsPDF("p", "mm", "a4");
 
     // Add first page
-    let position = margin; // Start with Top Margin
+    let contentShown = 0;
 
-    pdf.addImage(imgData, "PNG", margin, position, imgWidth, imgHeight);
-    heightLeft -= contentHeight;
+    pdf.addImage(imgData, "PNG", margin, margin, imgWidth, imgHeight);
+    contentShown += contentHeight + margin;
 
     // Add additional pages if content is longer than one page
-    while (heightLeft > 0) {
-      position = margin - (imgHeight - heightLeft);
+    while (contentShown < imgHeight) {
       pdf.addPage();
+      const position = margin - contentShown;
       pdf.addImage(imgData, "PNG", margin, position, imgWidth, imgHeight);
-      heightLeft -= contentHeight;
+      contentShown += contentHeight;
     }
 
     // save PDF
