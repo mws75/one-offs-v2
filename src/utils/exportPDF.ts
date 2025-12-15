@@ -46,7 +46,8 @@ export const exportToPDF = async (elementId: string, fileName: string) => {
     while (contentShown < imgHeight) {
       pdf.addPage();
       const position = margin - contentShown;
-      pdf.addImage(imgData, "PNG", margin, position, imgWidth, imgHeight);
+      pdf.addImage(imgData, "PNG", margin, position - 20, imgWidth, imgHeight);
+      // I feel like you can add an
       contentShown += contentHeight;
     }
 
