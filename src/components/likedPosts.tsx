@@ -28,58 +28,44 @@ const LikedPostsSection = () => {
   }
 
   return (
-    <>
-      <div className="m-4  w-11/12  items-center rounded-lg bg-slate-100 shadow-md">
-        <div className="flex items-center px-5 pt-5">
-          <Image
-            src={LikedHeart}
-            alt="liked heart"
-            width={40}
-            height={40}
-          ></Image>
-
-          <h3 className="p-2">Liked Posts</h3>
-          <Image
-            src={LikedHeart}
-            alt="liked heart"
-            width={40}
-            height={40}
-          ></Image>
-        </div>
-
-        <div className="py-5">
-          <ul>
-            {likedPosts.length === 0 ? (
-              <li className="m-5">you haven't liked any posts yet!</li>
-            ) : (
-              likedPosts.map((likedPost: LikedPost) => {
-                const pic_url =
-                  likedPost.post.profile_image_url || default_profile_pic;
-                return (
-                  <Link href={`/post/${likedPost.post.id}`}>
-                    <li
-                      key={likedPost.id}
-                      className="border-slate m-2 ml-4 flex w-96 rounded-lg border-2 border-solid bg-slate-100 p-2 hover:bg-slate-300"
-                    >
-                      <div className="flex w-96 items-center justify-between">
-                        <p>{likedPost.post.title}</p>
-                        <Image
-                          src={pic_url}
-                          alt="profile image"
-                          width={30}
-                          height={30}
-                          className="border-1 rounded-full border-solid border-slate-600"
-                        ></Image>
-                      </div>
-                    </li>
-                  </Link>
-                );
-              })
-            )}
-          </ul>
-        </div>
+    <div className="m-2 rounded-lg bg-slate-100 shadow-md sm:m-4">
+      {/* Section header */}
+      <div className="flex items-center gap-2 px-4 pt-4">
+        <Image src={LikedHeart} alt="liked heart" width={32} height={32} />
+        <h3 className="text-sm font-semibold sm:text-base">Liked Posts</h3>
+        <Image src={LikedHeart} alt="liked heart" width={32} height={32} />
       </div>
-    </>
+
+      {/* Liked posts list */}
+      <ul className="p-3 sm:p-4">
+        {likedPosts.length === 0 ? (
+          <li className="py-2 text-sm text-slate-500">
+            You haven't liked any posts yet!
+          </li>
+        ) : (
+          likedPosts.map((likedPost: LikedPost) => {
+            const pic_url =
+              likedPost.post.profile_image_url || default_profile_pic;
+            return (
+              <Link href={`/post/${likedPost.post.id}`} key={likedPost.id}>
+                <li className="mb-2 flex w-full items-center justify-between rounded-lg border border-slate-300 bg-white p-2 hover:bg-slate-300">
+                  <p className="mr-2 min-w-0 flex-1 truncate text-sm">
+                    {likedPost.post.title}
+                  </p>
+                  <Image
+                    src={pic_url}
+                    alt="profile image"
+                    width={28}
+                    height={28}
+                    className="flex-shrink-0 rounded-full border border-slate-600"
+                  />
+                </li>
+              </Link>
+            );
+          })
+        )}
+      </ul>
+    </div>
   );
 };
 

@@ -96,29 +96,32 @@ export const PostObject = (props: postedContent) => {
   return (
     <div className="relative">
       <Link href={`/post/${my_id}`}>
-        <span>
-          <div className="w-120 h-40 w-64 rounded-lg bg-slate-100 p-4 shadow-md hover:bg-slate-300">
+        <div className="flex min-h-[8rem] w-full flex-col rounded-lg bg-slate-100 p-3 pb-10 shadow-md hover:bg-slate-300">
+          <span className="line-clamp-3 text-sm font-medium leading-snug sm:text-base">
             {title}
-          </div>
-        </span>
+          </span>
+        </div>
       </Link>
+
+      {/* Profile image – bottom right */}
       <div className="absolute bottom-3 right-3">
         <Image
           src={pic_url}
           alt={"profile"}
-          width={32}
-          height={32}
-          className="border-1 ml-1 rounded-full border-black"
+          width={28}
+          height={28}
+          className="rounded-full border border-black"
         />
       </div>
-      <div className="absolute bottom-10 left-10">
-        <button
-          className="absolute right-0 top-0 flex flex-row p-2"
-          onClick={() => likedClicked(user_id, props.id)}
-        >
-          {isLiked === 1 ? <MdThumbUp size={20} /> : <LuThumbsUp size={20} />}
-        </button>
-      </div>
+
+      {/* Like button – bottom left */}
+      <button
+        className="absolute bottom-2 left-2 flex items-center rounded p-1 hover:bg-slate-200"
+        onClick={() => likedClicked(user_id, props.id)}
+        aria-label={isLiked === 1 ? "Unlike post" : "Like post"}
+      >
+        {isLiked === 1 ? <MdThumbUp size={20} /> : <LuThumbsUp size={20} />}
+      </button>
     </div>
   );
 };

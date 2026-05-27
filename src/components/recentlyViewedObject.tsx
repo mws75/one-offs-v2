@@ -38,70 +38,60 @@ export const RecentlyViewedObject = () => {
 
   const profile_image_url = user?.profileImageUrl;
   const user_profile = useUserProfile(user.id);
-  //   console.log(recently_viewed_json);
+
   if (user_profile.isLoading) {
     return <LoadingPage />;
   }
-  console.log("============ User Profile Debug =============");
-  console.log("user.id: ", user.id);
-  console.log("user_profile.isLoading: ", user_profile.isLoading);
-  console.log("user_profile.isError: ", user_profile.isError);
-  console.log("user_profile.error: ", user_profile.error);
-  console.log("user_profile.data: ", user_profile.data);
 
   const recentPostsJson = user_profile.data?.recent_posts_json
     ? JSON.parse(String(user_profile.data.recent_posts_json))
     : [];
 
   return (
-    <>
-      <div className=" h-min-35 m-4 grid w-11/12 grid-cols-6 items-center rounded-lg  bg-slate-100 shadow-md">
-        <div className="col-span-1 m-2 justify-items-center">
-          <Link href={`/userProfile`}>
-            <span>
-              <Image
-                src={
-                  profile_image_url ? profile_image_url : default_profile_pic
-                }
-                alt={"profile_pic"}
-                width={120}
-                height={120}
-                className="m-2 justify-items-center rounded-full border-2 border-solid border-slate-600"
-              />
-            </span>
-          </Link>
+    <div className="m-2 rounded-lg bg-slate-100 shadow-md sm:m-4">
+      <div className="flex items-center gap-3 p-3 sm:gap-4 sm:p-4">
+
+        {/* Profile picture – links to user profile */}
+        <Link href="/userProfile" className="flex-shrink-0">
+          <Image
+            src={profile_image_url ? profile_image_url : default_profile_pic}
+            alt={"profile_pic"}
+            width={56}
+            height={56}
+            className="h-14 w-14 rounded-full border-2 border-solid border-slate-600 sm:h-20 sm:w-20"
+          />
+        </Link>
+
+        {/* Recently viewed list – grows to fill available space */}
+        <div className="min-w-0 flex-1">
+          {recentPostsJson.length === 0 ? (
+            <p className="text-xs text-slate-500 sm:text-sm">
+              No recently viewed posts
+            </p>
+          ) : (
+            <ul className="space-y-1">
+              {recentPostsJson.map((item: recentPosts) => (
+                <Link href={`/post/${item.id}`} key={item.id}>
+                  <li className="truncate rounded-lg border border-slate-300 bg-white px-2 py-1.5 text-xs hover:bg-slate-300 sm:text-sm">
+                    {item.title}
+                  </li>
+                </Link>
+              ))}
+            </ul>
+          )}
         </div>
 
-        <div className="col-span-4">
-          <ul>
-            {recentPostsJson.map((item: recentPosts) => (
-              <Link href={`/post/${item.id}`}>
-                <li
-                  key={item.id}
-                  className="border-slate m-2 ml-4 rounded-lg border-2 border-solid bg-slate-100 p-2 hover:bg-slate-300"
-                >
-                  <span className="relative">{item.title}</span>
-                </li>
-              </Link>
-            ))}
-          </ul>
-        </div>
-        <div className="col-span-1 m-2">
-          <Link href={`/about`}>
-            <span>
-              <Image
-                src={logo}
-                alt={"shark"}
-                layout="responsive"
-                height={120}
-                width={120}
-              />
-            </span>
-          </Link>
-        </div>
-
-        <div className="col-span-1 m-4"></div>
+        {/* Logo – links to about page */}
+        <Link href="/about" className="flex-shrink-0">
+          <Image
+            src={logo}
+            alt={"ByteSizeTech Logo"}
+            width={56}
+            height={56}
+            className="h-14 w-14 sm:h-20 sm:w-20"
+          />
+        </Link>
       </div>
-    </>
+    </div>
   );
 };

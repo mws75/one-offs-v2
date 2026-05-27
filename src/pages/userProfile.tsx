@@ -29,33 +29,21 @@ const useUserPosts = (user_name: string) => {
 
 const UserProfileHeader: React.FC<UserProps> = (props) => {
   return (
-    <>
-      <div className="m-4 flex h-40 w-11/12  items-center rounded-lg bg-slate-100 shadow-md">
-        <Image
-          src={
-            props.profile_image_url
-              ? props.profile_image_url
-              : default_profile_pic
-          }
-          alt={"profile_pic"}
-          width={120}
-          height={120}
-          className="m-4 rounded-full border-2 border-solid border-slate-600"
-        />
-        <p>{`email: ${props.email}`}</p>
-      </div>
-    </>
-  );
-};
-
-const AlertWindow = () => {
-  const showAlert = () => {
-    window.alert("Post Deleted!");
-  };
-
-  return (
-    <div>
-      <button onClick={showAlert}>Show Alert</button>
+    <div className="m-2 flex items-center rounded-lg bg-slate-100 p-3 shadow-md sm:m-4 sm:p-4">
+      <Image
+        src={
+          props.profile_image_url
+            ? props.profile_image_url
+            : default_profile_pic
+        }
+        alt={"profile_pic"}
+        width={80}
+        height={80}
+        className="h-16 w-16 flex-shrink-0 rounded-full border-2 border-solid border-slate-600 sm:h-24 sm:w-24"
+      />
+      <p className="ml-3 break-all text-sm sm:ml-4 sm:text-base">
+        {`email: ${props.email}`}
+      </p>
     </div>
   );
 };
@@ -91,77 +79,84 @@ export const UserProfile = () => {
     },
   });
 
-  const editPost = (postId: number) => {};
-
   return (
-    <>
-      <div className="bg-gradient-to-r from-purple-300 to-pink-200">
-        <PageLayout>
-          <UserProfileHeader
-            profile_image_url={user.profileImageUrl}
-            id={user.id}
-            email={String(user.emailAddresses)}
-          />
-          <LikedPostsSection />
-          {isAdmin && (
-            <div>
-              <div className="m-4 flex w-11/12 items-center rounded-lg  bg-slate-100 py-4 shadow-md">
-                <ul>
-                  {!userPosts.data ? (
-                    <li>no posts yet</li>
-                  ) : (
-                    userPosts.data.map((item: UserPost) => (
-                      <div className="flex">
-                        <Link href={`/post/${item.id}`}>
-                          <li
-                            key={item.id}
-                            className="border-slate m-2 ml-4 flex w-96 rounded-lg border-2 border-solid bg-slate-100 p-2 hover:bg-slate-300"
-                          >
-                            <span className="flex-grow self-center">
-                              {item.title}
-                            </span>
-                          </li>
-                        </Link>
+    <div className="min-h-screen bg-gradient-to-r from-purple-300 to-pink-200">
+      <PageLayout>
+        {/* Profile header */}
+        <UserProfileHeader
+          profile_image_url={user.profileImageUrl}
+          id={user.id}
+          email={String(user.emailAddresses)}
+        />
 
-                        <button
-                          className="m-2 justify-items-end rounded-lg bg-purple-500 p-4 px-4 py-2 font-bold text-white hover:bg-purple-700"
-                          onClick={() =>
-                            mutate({
-                              id: item.id,
-                            })
-                          }
-                        >
-                          delete
+        {/* Liked posts */}
+        <LikedPostsSection />
+
+        {/* Admin: manage posts */}
+        {isAdmin && (
+          <div className="m-2 sm:m-4">
+            <div className="rounded-lg bg-slate-100 py-3 shadow-md sm:py-4">
+              <h2 className="px-4 pb-2 text-sm font-semibold text-slate-600 sm:text-base">
+                Your Posts
+              </h2>
+              <ul className="px-2">
+                {!userPosts.data ? (
+                  <li className="p-3 text-sm text-slate-500">No posts yet</li>
+                ) : (
+                  userPosts.data.map((item: UserPost) => (
+                    <li
+                      key={item.id}
+                      className="mb-2 flex flex-wrap items-center gap-2"
+                    >
+                      {/* Post title link */}
+                      <Link
+                        href={`/post/${item.id}`}
+                        className="min-w-0 flex-1"
+                      >
+                        <span className="block truncate rounded-lg border border-slate-300 bg-white px-3 py-2.5 text-sm hover:bg-slate-300">
+                          {item.title}
+                        </span>
+                      </Link>
+
+                      {/* Delete button */}
+                      <button
+                        className="flex h-10 items-center rounded-lg bg-purple-500 px-3 text-sm font-bold text-white hover:bg-purple-700 disabled:opacity-60"
+                        onClick={() => mutate({ id: item.id })}
+                        disabled={isDeleting}
+                      >
+                        Delete
+                      </button>
+
+                      {/* Edit button */}
+                      <Link href={`/editPost/${item.id}`}>
+                        <button className="flex h-10 items-center rounded-lg bg-purple-500 px-3 text-sm font-bold text-white hover:bg-purple-700">
+                          Edit
                         </button>
-
-                        <Link
-                          className="m-2 justify-items-end rounded-lg bg-purple-500 p-4 px-4 py-2 font-bold text-white hover:bg-purple-700"
-                          href={`/editPost/${item.id}`}
-                        >
-                          <button className="flex h-full items-center justify-center">
-                            <span className=" align-middle">edit</span>
-                          </button>
-                        </Link>
-                      </div>
-                    ))
-                  )}
-                </ul>
-              </div>
-              <Link href={`/newPost`}>
-                <button className="ml-4 rounded bg-purple-500 p-4 px-4 py-2 font-bold text-white hover:bg-purple-700">
-                  Createt New Post
-                </button>
-              </Link>
+                      </Link>
+                    </li>
+                  ))
+                )}
+              </ul>
             </div>
-          )}
+
+            <Link href="/newPost">
+              <button className="mt-3 flex h-11 items-center rounded bg-purple-500 px-5 font-bold text-white hover:bg-purple-700">
+                Create New Post
+              </button>
+            </Link>
+          </div>
+        )}
+
+        {/* Home link */}
+        <div className="m-2 sm:m-4">
           <Link href="/">
-            <button className="m-4 mt-5 rounded bg-purple-500 p-4 px-4 py-2 font-bold text-white hover:bg-purple-700">
-              home
+            <button className="flex h-11 items-center rounded bg-purple-500 px-5 font-bold text-white hover:bg-purple-700">
+              Home
             </button>
           </Link>
-        </PageLayout>
-      </div>
-    </>
+        </div>
+      </PageLayout>
+    </div>
   );
 };
 

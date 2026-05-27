@@ -16,17 +16,22 @@ const AboutPage = () => {
     writing so you don't have to waste yours reading. \n
 Our expansive team of some of the worlds leading software engineers work tirelessly to give
 you the best technology related blog posts humanly possible.`;
+
   return (
-    <div className="h-screen bg-gradient-to-r from-purple-300 to-pink-200">
+    <div className="min-h-screen bg-gradient-to-r from-purple-300 to-pink-200">
       <PageLayout>
-        <div>
-          <ReactMarkdown className="prose m-10">{post}</ReactMarkdown>
+        <div className="p-4 sm:p-8 sm:pt-10">
+          <ReactMarkdown className="prose prose-sm max-w-none sm:prose-base">
+            {post}
+          </ReactMarkdown>
         </div>
-        <Link href="/" className="ml-10">
-          <button className="mt-5 rounded bg-purple-500 p-4 px-4 py-2 font-bold text-white hover:bg-purple-700">
-            home
-          </button>
-        </Link>
+        <div className="px-4 pb-8 sm:px-8">
+          <Link href="/">
+            <button className="flex h-11 items-center rounded bg-purple-500 px-5 font-bold text-white hover:bg-purple-700">
+              Home
+            </button>
+          </Link>
+        </div>
       </PageLayout>
     </div>
   );
