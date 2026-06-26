@@ -46,9 +46,13 @@ const Home: NextPage = () => {
         <PageLayout>
           <div className="flex">
             {!isSignedIn && (
-              <div className="flex h-screen items-center justify-center">
+              <div className="flex min-h-screen flex-col items-center justify-center gap-6 px-4 sm:flex-row sm:gap-8">
                 <div>
-                  <Image className=" max-w-xl" src={logo} alt="Logo" />
+                  <Image
+                    className="w-64 max-w-full sm:max-w-xl"
+                    src={logo}
+                    alt="Logo"
+                  />
                 </div>
                 <div className="flex flex-col items-center justify-center">
                   <div className="flex justify-center items-center rounded bg-pink-500 px-4 py-2 font-bold text-white hover:bg-pink-700 mb-4 h-12 w-24">

@@ -106,7 +106,7 @@ const SinglePagePost = () => {
   if (!post_data.data) return <div>{`404 and id: ${id}`}</div>;
   return (
     <>
-      <div className="h-screen bg-gradient-to-r from-purple-300 to-pink-200">
+      <div className="min-h-screen bg-gradient-to-r from-purple-300 to-pink-200">
         <PageLayout>
           <div className="rounded-lg bg-white p-4 drop-shadow-lg">
             <div className="flex justify-end">
@@ -127,12 +127,13 @@ const SinglePagePost = () => {
               </div>
               <div className="m-2 mt-5">
                 <ReactMarkdown
-                  className="prose-md prose 
+                  className="prose-md prose
                            w-full max-w-none
-                           prose-p:w-11/12 
+                           prose-p:w-11/12
                            prose-code:text-base
-                           prose-pre:w-full 
-                           prose-pre:bg-codeGrey 
+                           prose-pre:w-full
+                           prose-pre:overflow-x-auto
+                           prose-pre:bg-codeGrey
                            prose-li:w-11/12"
                   children={post_data.data.post}
                   components={{

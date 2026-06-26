@@ -17,12 +17,12 @@ const AboutPage = () => {
 Our expansive team of some of the worlds leading software engineers work tirelessly to give
 you the best technology related blog posts humanly possible.`;
   return (
-    <div className="h-screen bg-gradient-to-r from-purple-300 to-pink-200">
+    <div className="min-h-screen bg-gradient-to-r from-purple-300 to-pink-200">
       <PageLayout>
         <div>
-          <ReactMarkdown className="prose m-10">{post}</ReactMarkdown>
+          <ReactMarkdown className="prose m-4 sm:m-10">{post}</ReactMarkdown>
         </div>
-        <Link href="/" className="ml-10">
+        <Link href="/" className="ml-4 sm:ml-10">
           <button className="mt-5 rounded bg-purple-500 p-4 px-4 py-2 font-bold text-white hover:bg-purple-700">
             home
           </button>

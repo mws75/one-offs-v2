@@ -66,7 +66,7 @@ export const RecentlyViewedObject = () => {
                 alt={"profile_pic"}
                 width={120}
                 height={120}
-                className="m-2 justify-items-center rounded-full border-2 border-solid border-slate-600"
+                className="m-2 h-14 w-14 justify-items-center rounded-full border-2 border-solid border-slate-600 sm:h-auto sm:w-auto"
               />
             </span>
           </Link>

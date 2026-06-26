@@ -6,8 +6,8 @@ export const PageLayout = (props: PropsWithChildren<{}>) => {
   }, []);
 
   return (
-    <main className="flex h-screen justify-center overflow-y-scroll">
-      <div className="h-full w-full  lg:max-w-4xl">{props.children}</div>
+    <main className="flex min-h-screen justify-center overflow-x-hidden overflow-y-auto">
+      <div className="w-full lg:max-w-4xl">{props.children}</div>
     </main>
   );
 };
