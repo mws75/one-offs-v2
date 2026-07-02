@@ -74,7 +74,6 @@ const SinglePagePost = () => {
     };
     updateData();
   }, [post_data.data, num_id]);
-
   if (post_data.isLoading) {
     return (
       <div className="flex min-h-screen items-center justify-center">
@@ -82,16 +81,17 @@ const SinglePagePost = () => {
       </div>
     );
   }
-
   // ------------------------------
   // Buttons
   // -----------------------------
   const handleExportPDF = async () => {
     console.log("going to export Markdown as PDF");
+    // Get Post Contents
     if (!post_data.data) {
       console.log("no data to export");
       return;
     }
+    // Get Utility
     const fileName = post_data.data.title
       .replace(/[^a-z0-9]/gi, "_")
       .toLowerCase();
@@ -104,41 +104,29 @@ const SinglePagePost = () => {
   };
 
   if (!post_data.data) return <div>{`404 and id: ${id}`}</div>;
-
   return (
     <>
       <div className="min-h-screen bg-gradient-to-r from-purple-300 to-pink-200">
         <PageLayout>
-          <div className="rounded-lg bg-white p-3 shadow-lg sm:p-6">
-
-            {/* Top action row */}
+          <div className="rounded-lg bg-white p-4 drop-shadow-lg">
             <div className="flex justify-end">
               <button
-                className="mt-3 flex h-11 items-center rounded bg-purple-500 px-4 font-bold text-white hover:bg-purple-700 sm:mt-5"
+                className="mt-5 rounded bg-purple-500 p-4 px-4 py-2 font-bold text-white hover:bg-purple-700"
                 onClick={handleExportPDF}
               >
                 Export PDF
               </button>
             </div>
 
-            {/* Post content */}
+            {/* Content to export to PDF */}
             <div id="post-content">
               <div className="m-2">
-                <ReactMarkdown className="prose prose-sm sm:prose-base">
-                  {`# ${post_data.data.title}`}
-                </ReactMarkdown>
+                <h1>
+                  <ReactMarkdown className="prose">{`#  ${post_data.data.title}`}</ReactMarkdown>
+                </h1>
               </div>
-
-              <div className="m-2 mt-4">
+              <div className="m-2 mt-5">
                 <ReactMarkdown
-<<<<<<< HEAD
-                  className="prose prose-sm w-full max-w-none
-                             sm:prose-base
-                             prose-pre:overflow-x-auto
-                             prose-pre:bg-codeGrey
-                             prose-pre:text-sm
-                             prose-code:text-sm"
-=======
                   className="prose-md prose
                            w-full max-w-none
                            prose-p:w-11/12
@@ -147,7 +135,6 @@ const SinglePagePost = () => {
                            prose-pre:overflow-x-auto
                            prose-pre:bg-codeGrey
                            prose-li:w-11/12"
->>>>>>> old-style-mobile
                   children={post_data.data.post}
                   components={{
                     code({
@@ -161,22 +148,26 @@ const SinglePagePost = () => {
                       const match = /language-(\w+)/.exec(className || "");
                       return !inline && match ? (
                         <div className="relative">
-                          <button className="absolute right-2 top-2 z-10 flex items-center rounded p-1 hover:opacity-75">
-                            <CopyToClipboard
-                              text={String(children).replace(/\n$/, "")}
-                              onCopy={() => notify()}
-                            >
-                              <IoIosCopy className="text-lg text-slate-300 hover:text-white" />
-                            </CopyToClipboard>
+                          <button className="absolute right-0 top-0 flex flex-row p-2">
+                            <span>
+                              <CopyToClipboard
+                                text={String(children).replace(/\n$/, "")}
+                                onCopy={() => notify()}
+                              >
+                                <IoIosCopy className="m-1 basis-1/4 text-lg hover:text-white" />
+                              </CopyToClipboard>
+                            </span>
                           </button>
 
-                          <SyntaxHighlighter
-                            language={match[1]}
-                            style={oneDark}
-                            {...props}
-                          >
-                            {String(children).replace(/\n$/, "")}
-                          </SyntaxHighlighter>
+                          <div>
+                            <SyntaxHighlighter
+                              language={match[1]}
+                              style={oneDark}
+                              {...props}
+                            >
+                              {String(children).replace(/\n$/, "")}
+                            </SyntaxHighlighter>
+                          </div>
                         </div>
                       ) : (
                         <code className={className} {...props}>
@@ -189,10 +180,9 @@ const SinglePagePost = () => {
               </div>
             </div>
 
-            {/* Footer nav */}
             <Link href="/">
-              <button className="mt-4 flex h-11 items-center rounded bg-purple-500 px-4 font-bold text-white hover:bg-purple-700">
-                Home
+              <button className="mt-5 ml-4 rounded bg-purple-500 p-4 px-4 py-2 font-bold text-white hover:bg-purple-700">
+                home
               </button>
             </Link>
           </div>
