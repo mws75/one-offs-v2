@@ -118,19 +118,18 @@ const PostFeed = () => {
 
   return (
     <>
-      {/* Search bar – full width with horizontal padding */}
-      <div className="mb-3 flex w-full items-center px-2 sm:px-4">
-        <form className="flex w-full items-center shadow-md" onSubmit={onSearch}>
+      <div className="mb-4 ml-4 flex w-11/12 items-center shadow-md">
+        <form className="flex w-full items-center" onSubmit={onSearch}>
           <input
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             type="text"
             placeholder="Search"
-            className="min-h-[44px] w-full rounded-l-md bg-slate-100 px-4 py-2 focus:border-purple-500 focus:outline-none focus:ring-2 focus:ring-purple-500"
+            className="w-11/12 rounded-l-md bg-slate-100 px-4 py-2 focus:border-purple-500 focus:outline-none focus:ring-2 focus:ring-purple-500"
           />
           <button
             type="button"
-            className="min-h-[44px] rounded-r-md bg-purple-500 px-4 py-2 text-white transition-colors hover:bg-purple-600"
+            className="rounded-r-md bg-purple-500 px-4 py-2 text-white transition-colors hover:bg-purple-600"
             onClick={onSearch}
           >
             Search
@@ -138,8 +137,7 @@ const PostFeed = () => {
         </form>
       </div>
 
-      {/* Post grid: 2 cols on mobile, 3 on medium+ */}
-      <div className="grid grid-cols-2 gap-2 px-2 sm:px-4 md:grid-cols-3">
+      <div className="m-2 flex flex-wrap">
         {data.map((post) => {
           const liked = likedPosts.includes(post.id) ? 1 : 0;
           const likedJSON = `{"liked":${liked}}`;
@@ -149,7 +147,7 @@ const PostFeed = () => {
           const postJSON = JSON.parse(postObject);
 
           return (
-            <div key={post.id}>
+            <div key={post.id} className="mx-1 p-2">
               <PostObject {...postJSON} key={post.id} />
             </div>
           );
