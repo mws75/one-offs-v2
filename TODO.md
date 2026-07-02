@@ -24,7 +24,7 @@ Test and deploy a feature that allows the user to export the markdown section as
 1. Create a PDF Utility to Export the Post content as a PDF [x]
 2. Add Export Button to the Post Page : Pink! [x]
 3. Test and Refine [x]
-4. Fix formatting issue on top margin of the second page for src/utils/exportPDF.ts
+4. Fix formatting issue on top margin of the second page for src/utils/exportPDF.ts []
 
 ## 2. Document Environment SetUp []
 
