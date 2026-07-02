@@ -131,12 +131,23 @@ const SinglePagePost = () => {
 
               <div className="m-2 mt-4">
                 <ReactMarkdown
+<<<<<<< HEAD
                   className="prose prose-sm w-full max-w-none
                              sm:prose-base
                              prose-pre:overflow-x-auto
                              prose-pre:bg-codeGrey
                              prose-pre:text-sm
                              prose-code:text-sm"
+=======
+                  className="prose-md prose
+                           w-full max-w-none
+                           prose-p:w-11/12
+                           prose-code:text-base
+                           prose-pre:w-full
+                           prose-pre:overflow-x-auto
+                           prose-pre:bg-codeGrey
+                           prose-li:w-11/12"
+>>>>>>> old-style-mobile
                   children={post_data.data.post}
                   components={{
                     code({

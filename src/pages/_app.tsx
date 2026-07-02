@@ -1,4 +1,5 @@
 import { type AppType } from "next/app";
+import Head from "next/head";
 
 import { api } from "~/utils/api";
 
@@ -13,6 +14,13 @@ import { ClerkProvider } from "@clerk/nextjs";
 const MyApp: AppType = ({ Component, pageProps }) => {
   return (
     <ClerkProvider {...pageProps}>
+      <Head>
+        {/* Make the layout scale correctly on phones */}
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1"
+        />
+      </Head>
       <Component {...pageProps} />
     </ClerkProvider>
   );

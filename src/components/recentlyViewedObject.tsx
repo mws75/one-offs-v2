@@ -48,6 +48,7 @@ export const RecentlyViewedObject = () => {
     : [];
 
   return (
+<<<<<<< HEAD
     <div className="m-2 rounded-lg bg-slate-100 shadow-md sm:m-4">
       <div className="flex items-center gap-3 p-3 sm:gap-4 sm:p-4">
 
@@ -79,6 +80,24 @@ export const RecentlyViewedObject = () => {
               ))}
             </ul>
           )}
+=======
+    <>
+      <div className=" h-min-35 m-4 grid w-11/12 grid-cols-6 items-center rounded-lg  bg-slate-100 shadow-md">
+        <div className="col-span-1 m-2 justify-items-center">
+          <Link href={`/userProfile`}>
+            <span>
+              <Image
+                src={
+                  profile_image_url ? profile_image_url : default_profile_pic
+                }
+                alt={"profile_pic"}
+                width={120}
+                height={120}
+                className="m-2 h-14 w-14 justify-items-center rounded-full border-2 border-solid border-slate-600 sm:h-auto sm:w-auto"
+              />
+            </span>
+          </Link>
+>>>>>>> old-style-mobile
         </div>
 
         {/* Logo – links to about page */}

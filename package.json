@@ -22,7 +22,7 @@
     "@trpc/server": "^10.18.0",
     "html2canvas": "^1.4.1",
     "jspdf": "^3.0.4",
-    "next": "^13.4.13",
+    "next": "^13.5.10",
     "prismjs": "^1.29.0",
     "react": "^18.2.0",
     "react-copy-to-clipboard": "^5.1.0",
