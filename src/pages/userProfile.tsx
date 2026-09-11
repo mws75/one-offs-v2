@@ -5,6 +5,7 @@ import Image from "next/image";
 import default_profile_pic from "../../public/default_profile_pic.png";
 import { PageLayout } from "~/components/layouts";
 import LikedPostsSection from "~/components/likedPosts";
+import FinanceLikedPostsSection from "~/components/financeLikedPosts";
 import Link from "next/link";
 import { LoadingPage } from "~/components/loadingspinner";
 
@@ -77,6 +78,20 @@ export const UserProfile = () => {
   const userPosts = useUserPosts(user.id);
   const { data: currentUser } = api.profile.getCurrentUser.useQuery();
   const isAdmin = currentUser?.is_admin ?? false;
+  const financeUserPosts = api.financePosts.getUserPosts.useQuery({ user_name: user.id });
+  const { mutate: deleteFinancePost } = api.financePosts.delete.useMutation({
+    onSuccess: () => {
+      alert("Finance post deleted!");
+    },
+    onError: (error) => {
+      const errorMessage = error.data?.zodError?.fieldErrors.content;
+      if (errorMessage && errorMessage[0]) {
+        alert(errorMessage[0]);
+      } else {
+        alert("Something went wrong, failed to delete");
+      }
+    },
+  });
   const { mutate, isLoading: isDeleting } = api.posts.delete.useMutation({
     onSuccess: () => {
       alert("Post deleted!");
@@ -103,6 +118,7 @@ export const UserProfile = () => {
             email={String(user.emailAddresses)}
           />
           <LikedPostsSection />
+          <FinanceLikedPostsSection />
           {isAdmin && (
             <div>
               <div className="m-4 flex w-11/12 items-center rounded-lg  bg-slate-100 py-4 shadow-md">
@@ -150,6 +166,46 @@ export const UserProfile = () => {
               <Link href={`/newPost`}>
                 <button className="ml-4 rounded bg-purple-500 p-4 px-4 py-2 font-bold text-white hover:bg-purple-700">
                   Createt New Post
+                </button>
+              </Link>
+            </div>
+          )}
+          {isAdmin && (
+            <div>
+              <div className="m-4 flex w-11/12 items-center rounded-lg bg-slate-100 py-4 shadow-md">
+                <ul>
+                  {!financeUserPosts.data ? (
+                    <li className="ml-4">no finance posts yet</li>
+                  ) : (
+                    financeUserPosts.data.map((item: UserPost) => (
+                      <div className="flex" key={item.id}>
+                        <Link href={`/finance/post/${item.id}`}>
+                          <li className="border-slate m-2 ml-4 flex w-96 rounded-lg border-2 border-solid bg-slate-100 p-2 hover:bg-slate-300">
+                            <span className="flex-grow self-center">{item.title}</span>
+                          </li>
+                        </Link>
+                        <button
+                          className="m-2 justify-items-end rounded-lg bg-[#627264] p-4 px-4 py-2 font-bold text-white hover:bg-[#4f5d51]"
+                          onClick={() => deleteFinancePost({ id: item.id })}
+                        >
+                          delete
+                        </button>
+                        <Link
+                          className="m-2 justify-items-end rounded-lg bg-[#627264] p-4 px-4 py-2 font-bold text-white hover:bg-[#4f5d51]"
+                          href={`/finance/editPost/${item.id}`}
+                        >
+                          <button className="flex h-full items-center justify-center">
+                            <span className="align-middle">edit</span>
+                          </button>
+                        </Link>
+                      </div>
+                    ))
+                  )}
+                </ul>
+              </div>
+              <Link href="/finance/newPost">
+                <button className="ml-4 rounded bg-[#627264] p-4 px-4 py-2 font-bold text-white hover:bg-[#4f5d51]">
+                  Create New Finance Post
                 </button>
               </Link>
             </div>

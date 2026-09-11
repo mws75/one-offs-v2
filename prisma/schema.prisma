@@ -20,14 +20,15 @@ model Posts {
 }
 
 model Users {
-  id                Int      @id @default(autoincrement())
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
-  recent_posts_json String?  @db.VarChar(5000)
-  liked_posts       String?  @db.VarChar(255)
-  profile_image_url String?  @db.VarChar(255)
-  user_id           String   @unique @db.VarChar(255)
-  is_admin          Boolean  @default(false)
+  id                        Int      @id @default(autoincrement())
+  createdAt                 DateTime @default(now())
+  updatedAt                 DateTime @updatedAt
+  recent_posts_json         String?  @db.VarChar(5000)
+  finance_recent_posts_json String?  @db.VarChar(5000)
+  liked_posts               String?  @db.VarChar(255)
+  profile_image_url         String?  @db.VarChar(255)
+  user_id                   String   @unique @db.VarChar(255)
+  is_admin                  Boolean  @default(false)
 }
 
 model SearchQuery {
@@ -42,6 +43,26 @@ model LikePosts {
   post_id    Int
   post_liked Int
   post       Posts    @relation(fields: [post_id], references: [id])
+}
+
+model FinancePosts {
+  id                Int                @id @default(autoincrement())
+  createdAt         DateTime           @default(now())
+  updatedAt         DateTime           @updatedAt
+  user_name         String             @db.VarChar(255)
+  post              String             @db.VarChar(5000)
+  title             String             @db.VarChar(255)
+  profile_image_url String?            @db.VarChar(255)
+  likePosts         FinanceLikePosts[]
+}
+
+model FinanceLikePosts {
+  id         Int          @id @default(autoincrement())
+  createdAt  DateTime     @default(now())
+  user_id    String       @db.VarChar(255)
+  post_id    Int
+  post_liked Int
+  post       FinancePosts @relation(fields: [post_id], references: [id])
 }
 
 model ltc_categories {

@@ -59,6 +59,16 @@ export const profileRouter = createTRPCRouter({
       return user_profile;
     }),
 
+  updateFinanceRecentlyViewed: privateProcedure
+    .input(z.object({ content: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      const userId = ctx.userId;
+      return ctx.prisma.users.update({
+        where: { user_id: userId },
+        data: { finance_recent_posts_json: input.content },
+      });
+    }),
+
   getCurrentUser: privateProcedure.query(async ({ ctx }) => {
     const user = await ctx.prisma.users.findUnique({
       where: { user_id: ctx.userId },

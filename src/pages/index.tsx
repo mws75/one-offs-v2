@@ -72,6 +72,12 @@ const Home: NextPage = () => {
                       About
                     </button>
                   </Link>
+
+                  <Link href="/finance">
+                    <button className="m-5 rounded bg-[#627264] p-4 px-4 py-2 font-bold text-white hover:bg-[#4f5d51]">
+                      Finance
+                    </button>
+                  </Link>
                 </div>
               </div>
             )}
@@ -90,6 +96,11 @@ const Home: NextPage = () => {
                     </button>
                   </Link>
                 )}
+                <Link href="/finance">
+                  <button className="my-5 mr-5 rounded bg-[#627264] p-4 px-4 py-2 font-bold text-white hover:bg-[#4f5d51]">
+                    Finance
+                  </button>
+                </Link>
                 <div className="my-5 w-32 rounded bg-pink-400 p-4  py-2 font-bold text-white hover:bg-pink-700">
                   <SignOutButton />
                 </div>
