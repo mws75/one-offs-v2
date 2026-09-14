@@ -11,6 +11,8 @@ export const exportToPDF = async (elementId: string, fileName: string) => {
     if (!element) {
       throw new Error(`Element with elementId ${elementId} not found`);
     }
+    // Wait for KaTeX web fonts so equations aren't captured in fallback fonts
+    await document.fonts.ready;
     // Convert the element to canvas
     const canvas = await html2Canvas(element, {
       scale: 2,

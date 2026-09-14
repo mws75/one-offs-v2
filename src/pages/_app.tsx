@@ -3,6 +3,7 @@ import Head from "next/head";
 
 import { api } from "~/utils/api";
 
+import "katex/dist/katex.min.css";
 import "~/styles/globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
 

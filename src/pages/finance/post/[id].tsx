@@ -9,11 +9,8 @@ import { udpatedRecentlyViewedJson } from "../../../server/helpers/dataHelper";
 import { useEffect } from "react";
 import { PageLayout } from "~/components/layouts";
 import { LoadingSpinner } from "~/components/loadingspinner";
-import { IoIosCopy } from "react-icons/io";
-import { CopyToClipboard } from "react-copy-to-clipboard";
+import { MarkdownRenderer } from "~/components/markdownRenderer";
 import React from "react";
-import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import { oneDark } from "react-syntax-highlighter/dist/cjs/styles/prism";
 
 const useUserProfile = (userId: string) => {
   const { data, isError, isLoading, error } = api.profile.getById.useQuery({
@@ -28,8 +25,6 @@ const usePostInfo = (post_id: number) => {
   });
   return { data, isError, isLoading, error };
 };
-
-const notify = () => { alert("Copied to clipboard"); };
 
 const FinanceSinglePagePost = () => {
   const router = useRouter();
@@ -104,49 +99,7 @@ const FinanceSinglePagePost = () => {
                 </h1>
               </div>
               <div className="m-2 mt-5">
-                <ReactMarkdown
-                  className="prose-md prose
-                           w-full max-w-none
-                           prose-p:w-11/12
-                           prose-code:text-base
-                           prose-pre:w-full
-                           prose-pre:overflow-x-auto
-                           prose-pre:bg-codeGrey
-                           prose-li:w-11/12"
-                  children={post_data.data.post}
-                  components={{
-                    code({ node, inline, className, children, style, ...props }) {
-                      const match = /language-(\w+)/.exec(className || "");
-                      return !inline && match ? (
-                        <div className="relative">
-                          <button className="absolute right-0 top-0 flex flex-row p-2">
-                            <span>
-                              <CopyToClipboard
-                                text={String(children).replace(/\n$/, "")}
-                                onCopy={() => notify()}
-                              >
-                                <IoIosCopy className="m-1 basis-1/4 text-lg hover:text-white" />
-                              </CopyToClipboard>
-                            </span>
-                          </button>
-                          <div>
-                            <SyntaxHighlighter
-                              language={match[1]}
-                              style={oneDark}
-                              {...props}
-                            >
-                              {String(children).replace(/\n$/, "")}
-                            </SyntaxHighlighter>
-                          </div>
-                        </div>
-                      ) : (
-                        <code className={className} {...props}>
-                          {children}
-                        </code>
-                      );
-                    },
-                  }}
-                />
+                <MarkdownRenderer markdown={post_data.data.post} />
               </div>
             </div>
 

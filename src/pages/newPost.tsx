@@ -1,10 +1,10 @@
-import ReactMarkdown from "react-markdown";
 import { useState } from "react";
 import Link from "next/link";
 import { useUser } from "@clerk/nextjs";
 import { api } from "../utils/api";
 import { type NextPage } from "next";
 import { PageLayout } from "~/components/layouts";
+import { MarkdownRenderer } from "~/components/markdownRenderer";
 
 export const NewPost = () => {
   const [markdown, setMarkdown] = useState("");
@@ -41,7 +41,7 @@ export const NewPost = () => {
         alert(errorMessage[0]);
       } else {
         alert(
-          "Something went wrong, failed to Post, Post must be < 5000 characters." +
+          "Something went wrong, failed to Post, Post must be < 10000 characters." +
             String(error)
         );
       }
@@ -73,7 +73,7 @@ export const NewPost = () => {
         ></textarea>
 
         <div className="m-5">
-          <ReactMarkdown className="prose">{markdown}</ReactMarkdown>
+          <MarkdownRenderer markdown={markdown} />
         </div>
         <div className="flex">
           <button

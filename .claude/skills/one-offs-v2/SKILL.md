@@ -34,7 +34,7 @@ Schema defined in `prisma/schema.prisma`. Push changes with `npx prisma db push`
 
 | Model | Key fields | Notes |
 |---|---|---|
-| `Posts` | `id` (autoincrement), `user_name` (Clerk userId), `post` (markdown body ≤5000 chars), `title`, `profile_image_url` | Core content table |
+| `Posts` | `id` (autoincrement), `user_name` (Clerk userId), `post` (markdown body ≤10000 chars), `title`, `profile_image_url` | Core content table |
 | `Users` | `user_id` (Clerk userId, unique), `recent_posts_json` (JSON string, max 3 items), `liked_posts` (unused string), `profile_image_url`, `is_admin` (boolean) | App user record; created on first sign-in |
 | `LikePosts` | `user_id`, `post_id` (FK → Posts), `post_liked` (always 1) | Many rows per user/post pair possible; deletion uses `findMany` + loop |
 | `SearchQuery` | `id`, `query` | Not actively used in app |
@@ -91,7 +91,7 @@ The Clerk middleware (`src/middleware.ts`) runs on all routes but just calls `Ne
 - `/` (`index.tsx`) — Landing/home. Signed-out: logo + Sign In / Sign Up / About buttons. Signed-in: `RecentlyViewedObject` + `PostFeed` (search + post tiles) + admin-only "Create New Post" button + Sign Out.
 - `/about` — Static about page (inline markdown via ReactMarkdown).
 - `/post/[id]` — Single post detail. **Requires sign-in** (redirects with `RedirectToSignIn`). Renders full markdown with syntax highlighting + copy-to-clipboard. Updates recently-viewed on load. "Export PDF" button (html2canvas → jsPDF).
-- `/newPost` — Create post. Admin only (checks `user.primaryEmailAddress` + uses `adminProcedure`). Live markdown preview while typing. Max 5000 chars.
+- `/newPost` — Create post. Admin only (checks `user.primaryEmailAddress` + uses `adminProcedure`). Live markdown preview while typing. Max 10000 chars.
 - `/editPost/[id]` — Edit post. Admin only. Loads existing content, live preview, saves with `posts.update`.
 - `/userProfile` — User profile. Shows liked posts (`LikedPostsSection`). If admin: also shows all their posts with delete and edit buttons.
 - `/search` — Minimal; calls `posts.getByTitle` but only `console.log`s the result (unfinished).
@@ -104,6 +104,7 @@ The Clerk middleware (`src/middleware.ts`) runs on all routes but just calls `Ne
 - **`LikedPostsSection`** (`likedPosts.tsx`) — List of liked posts with titles and avatars. Shown on user profile.
 - **`RecentlyViewedObject`** (`recentlyViewedObject.tsx`) — Shows the last ≤3 viewed posts from `Users.recent_posts_json`.
 - **`SearchBar`** (`searchBar.tsx`) — Standalone search bar component (also exists inline in PostFeed).
+- **`MarkdownRenderer`** (`markdownRenderer.tsx`) — Shared post-body renderer used by all post, new-post and edit-post pages (tech + finance). Prism syntax highlighting + copy button, and KaTeX math via `remark-math@5` / `rehype-katex@6` (pinned: newer majors need react-markdown 9). Math is `$$...$$` only (`singleDollarTextMath: false`, so `$` amounts stay literal); `output: "html"` avoids duplicate MathML in PDF export.
 - **`LoadingSpinner` / `LoadingPage`** (`loadingspinner.tsx`) — Full-page and inline spinners.
 
 ## Utilities

@@ -1,10 +1,10 @@
-import ReactMarkdown from "react-markdown";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useUser } from "@clerk/nextjs";
 import { api } from "../../utils/api";
 import { type NextPage } from "next";
 import { PageLayout } from "~/components/layouts";
+import { MarkdownRenderer } from "~/components/markdownRenderer";
 import { useRouter } from "next/router";
 import { LoadingPage } from "~/components/loadingspinner";
 
@@ -113,7 +113,7 @@ export const EditPost = () => {
         ></textarea>
 
         <div className="m-5">
-          <ReactMarkdown className="prose">{markdown}</ReactMarkdown>
+          <MarkdownRenderer markdown={markdown} />
         </div>
         <div className="flex">
           <button
