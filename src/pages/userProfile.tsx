@@ -185,13 +185,13 @@ export const UserProfile = () => {
                           </li>
                         </Link>
                         <button
-                          className="m-2 justify-items-end rounded-lg bg-[#627264] p-4 px-4 py-2 font-bold text-white hover:bg-[#4f5d51]"
+                          className="m-2 justify-items-end rounded-lg bg-teal-600 p-4 px-4 py-2 font-bold text-white hover:bg-teal-700"
                           onClick={() => deleteFinancePost({ id: item.id })}
                         >
                           delete
                         </button>
                         <Link
-                          className="m-2 justify-items-end rounded-lg bg-[#627264] p-4 px-4 py-2 font-bold text-white hover:bg-[#4f5d51]"
+                          className="m-2 justify-items-end rounded-lg bg-teal-600 p-4 px-4 py-2 font-bold text-white hover:bg-teal-700"
                           href={`/finance/editPost/${item.id}`}
                         >
                           <button className="flex h-full items-center justify-center">
@@ -204,7 +204,7 @@ export const UserProfile = () => {
                 </ul>
               </div>
               <Link href="/finance/newPost">
-                <button className="ml-4 rounded bg-[#627264] p-4 px-4 py-2 font-bold text-white hover:bg-[#4f5d51]">
+                <button className="ml-4 rounded bg-teal-600 p-4 px-4 py-2 font-bold text-white hover:bg-teal-700">
                   Create New Finance Post
                 </button>
               </Link>

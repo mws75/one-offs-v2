@@ -74,7 +74,7 @@ const Home: NextPage = () => {
                   </Link>
 
                   <Link href="/finance">
-                    <button className="m-5 rounded bg-[#627264] p-4 px-4 py-2 font-bold text-white hover:bg-[#4f5d51]">
+                    <button className="m-5 rounded bg-teal-600 p-4 px-4 py-2 font-bold text-white hover:bg-teal-700">
                       Finance
                     </button>
                   </Link>
@@ -97,7 +97,7 @@ const Home: NextPage = () => {
                   </Link>
                 )}
                 <Link href="/finance">
-                  <button className="my-5 mr-5 rounded bg-[#627264] p-4 px-4 py-2 font-bold text-white hover:bg-[#4f5d51]">
+                  <button className="my-5 mr-5 rounded bg-teal-600 p-4 px-4 py-2 font-bold text-white hover:bg-teal-700">
                     Finance
                   </button>
                 </Link>
