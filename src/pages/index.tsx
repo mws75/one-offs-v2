@@ -49,7 +49,7 @@ const Home: NextPage = () => {
               <div className="flex min-h-screen flex-col items-center justify-center gap-6 px-4 sm:flex-row sm:gap-8">
                 <div>
                   <Image
-                    className="w-64 max-w-full sm:max-w-xl"
+                    className="w-64 max-w-full sm:w-96 md:w-[32rem] lg:w-[36rem]"
                     src={logo}
                     alt="Logo"
                   />
@@ -67,15 +67,15 @@ const Home: NextPage = () => {
                     </SignInButton>
                   </div>
 
-                  <Link href="/about">
-                    <button className="m-5 rounded bg-blue-500 p-4 px-4 py-2 font-bold text-white hover:bg-blue-700">
-                      About
-                    </button>
-                  </Link>
-
                   <Link href="/finance">
                     <button className="m-5 rounded bg-teal-600 p-4 px-4 py-2 font-bold text-white hover:bg-teal-700">
                       Finance
+                    </button>
+                  </Link>
+
+                  <Link href="/about">
+                    <button className="m-5 rounded bg-blue-500 p-4 px-4 py-2 font-bold text-white hover:bg-blue-700">
+                      About
                     </button>
                   </Link>
                 </div>

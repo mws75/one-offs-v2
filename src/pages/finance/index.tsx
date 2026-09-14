@@ -40,7 +40,7 @@ const FinanceHome: NextPage = () => {
               <div className="flex min-h-screen flex-col items-center justify-center gap-6 px-4 sm:flex-row sm:gap-8">
                 <div>
                   <Image
-                    className="w-64 max-w-full sm:max-w-xl"
+                    className="w-64 max-w-full sm:w-96 md:w-[32rem] lg:w-[36rem]"
                     src={logo}
                     alt="Logo"
                   />
